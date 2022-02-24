@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using SalesWeb.Models;
-
-namespace SalesWeb.Controllers;
+﻿namespace SalesWeb.Controllers;
 
 public class HomeController : Controller
 {

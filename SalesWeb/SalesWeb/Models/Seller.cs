@@ -1,9 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace SalesWeb.Models;
 public class Seller
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
     [Required(ErrorMessage = "This field is required.")]
     [StringLength(80, MinimumLength = 8, ErrorMessage = "This field must have between 8 and 80 characters.")]

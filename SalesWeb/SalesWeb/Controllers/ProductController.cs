@@ -1,13 +1,13 @@
 namespace SalesWeb.Controllers;
 
 [Controller]
-public class SellerController : Controller
+public class ProductController : Controller
 {
     public async  Task<IActionResult> Index([FromServices] SalesWebDbContext context)
     {
         
-        List<Seller> sellers = await context.Sellers.AsNoTracking().ToListAsync();
-        return  View(sellers);
+        List<Product> products = await context.Products.AsNoTracking().ToListAsync();
+        return  View(products);
     }
     
     
@@ -16,30 +16,33 @@ public class SellerController : Controller
         if (id == null)
             return NotFound();
 
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-        if (seller == null)
+        var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        if (product == null)
             return NotFound();
 
-        return View(seller);
+        return View(product);
     }
 
     public IActionResult Create()
     {
         return View();
     }
-
+    
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([FromServices] SalesWebDbContext context, [Bind("Name,Email,Password,BirthDate")] Seller seller)
+    public async Task<IActionResult> Create([FromServices] SalesWebDbContext context,[Bind("Id,Name,Price")] Product product)
     {
         if (ModelState.IsValid)
         {
             try
             {
-                context.Add(seller);
+                if (product == null)
+                    return NotFound();
+
+                context.Add(product);
                 await context.SaveChangesAsync();
                 
-                View(seller);
+                View(product);
                 
                 return RedirectToAction(nameof(Index));
 
@@ -52,26 +55,25 @@ public class SellerController : Controller
 
         return View();
     }
-
-
+    
     public async Task<IActionResult> Update([FromServices] SalesWebDbContext context, int id)
     {
         if (id == null)
             return NotFound();
             
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
-        if (seller == null)
+        if (product == null)
             return NotFound();
 
-        return View(seller);
+        return View(product);
     }
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update([FromServices] SalesWebDbContext context, int id, [Bind("Id,Name,Email,Password,BirthDate")] Seller seller)
+    public async Task<IActionResult> Update([FromServices] SalesWebDbContext context, int id, [Bind("Id,Name,Price")] Product product)
     {
-        if (id != seller.Id)
+        if (id != product.Id)
             return NotFound();
 
 
@@ -79,9 +81,9 @@ public class SellerController : Controller
         {
             try
             {
-                context.Update(seller);
+                context.Update(product);
                 await context.SaveChangesAsync();
-                Ok(seller);
+                Ok(product);
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateException)
@@ -102,12 +104,12 @@ public class SellerController : Controller
         if (id == null)
             return NotFound();
 
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
-        if (seller == null)
+        if (product == null)
             return NotFound();
 
-        return View(seller);
+        return View(product);
     }
 
     [HttpPost, ActionName("Delete")]
@@ -115,20 +117,20 @@ public class SellerController : Controller
     public async Task<IActionResult> DeleteConfirmed([FromServices] SalesWebDbContext context, int id)
     {
         
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
         if (ModelState.IsValid)
         {
             try
             {
-                context.Sellers.Remove(seller!);
+                context.Products.Remove(product!);
                 await context.SaveChangesAsync();
-                Ok(seller);
+                Ok(product);
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, "Unable to update product.");
+                return StatusCode(500, "Unable to delete product.");
             }
             catch (Exception)
             {
@@ -138,5 +140,6 @@ public class SellerController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
 
 }

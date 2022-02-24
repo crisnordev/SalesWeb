@@ -29,6 +29,19 @@
                 </ul>
             </div>
             <div class="btn-group" role="group">
+                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Products
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <a class="dropdown-item" asp-controller="Product" asp-action="Index">Products</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" asp-controller="Product" asp-action="Create">New product</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-group" role="group">
                 <button type="button" class="btn btn-light">
                     <a class="btn btn-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                 </button>
