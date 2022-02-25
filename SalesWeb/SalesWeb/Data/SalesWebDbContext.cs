@@ -4,6 +4,7 @@ public class SalesWebDbContext : DbContext
 {
     public DbSet<Seller>? Sellers { get; set; }
     public DbSet<Product>? Products { get; set; }
+    public DbSet<Customer>? Customers { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
@@ -18,6 +19,7 @@ public class SalesWebDbContext : DbContext
         
         modelBuilder.ApplyConfiguration(new SellerMap());
         modelBuilder.ApplyConfiguration(new ProductMap());
+        modelBuilder.ApplyConfiguration(new CustomerMap());
     }
 
 }

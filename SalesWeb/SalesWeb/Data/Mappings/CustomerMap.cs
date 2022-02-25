@@ -1,10 +1,10 @@
 namespace SalesWeb.Data.Mappings;
 
-public class SellerMap : IEntityTypeConfiguration<Seller>
+public class CustomerMap : IEntityTypeConfiguration<Customer>
 {
-    public void Configure(EntityTypeBuilder<Seller> builder)
+    public void Configure(EntityTypeBuilder<Customer> builder)
     {
-        builder.ToTable("Seller");
+        builder.ToTable("Customer");
         
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id)
@@ -28,12 +28,6 @@ public class SellerMap : IEntityTypeConfiguration<Seller>
             HasColumnName("Cpf").
             HasColumnType("VARCHAR").
             HasMaxLength(11);
-        
-        builder.Property(x => x.Password).
-            IsRequired().
-            HasColumnName("Password").
-            HasColumnType("VARCHAR").
-            HasMaxLength(255);
         
         builder.Property(x => x.BirthDate).
             IsRequired().

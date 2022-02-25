@@ -1,13 +1,13 @@
 namespace SalesWeb.Controllers;
 
 [Controller]
-public class SellerController : Controller
+public class CustomerController : Controller
 {
     public async  Task<IActionResult> Index([FromServices] SalesWebDbContext context)
     {
         
-        List<Seller> sellers = await context.Sellers.AsNoTracking().ToListAsync();
-        return  View(sellers);
+        var customers = await context.Customers.AsNoTracking().ToListAsync();
+        return  View(customers);
     }
     
     
@@ -16,11 +16,11 @@ public class SellerController : Controller
         if (id == null)
             return NotFound();
 
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-        if (seller == null)
+        var customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        if (customer == null)
             return NotFound();
 
-        return View(seller);
+        return View(customer);
     }
 
     public IActionResult Create()
@@ -30,16 +30,16 @@ public class SellerController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([FromServices] SalesWebDbContext context, [Bind("Name,Email,Password,Cpf,BirthDate")] Seller seller)
+    public async Task<IActionResult> Create([FromServices] SalesWebDbContext context, [Bind("Name,Email,Cpf,BirthDate")] Customer customer)
     {
         if (ModelState.IsValid)
         {
             try
             {
-                context.Add(seller);
+                context.Add(customer);
                 await context.SaveChangesAsync();
                 
-                View(seller);
+                View(customer);
                 
                 return RedirectToAction(nameof(Index));
 
@@ -59,19 +59,19 @@ public class SellerController : Controller
         if (id == null)
             return NotFound();
             
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
-        if (seller == null)
+        if (customer == null)
             return NotFound();
 
-        return View(seller);
+        return View(customer);
     }
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update([FromServices] SalesWebDbContext context, int id, [Bind("Id,Name,Email,Cpf,Password,BirthDate")] Seller seller)
+    public async Task<IActionResult> Update([FromServices] SalesWebDbContext context, int id, [Bind("Id,Name,Email,Cpf,BirthDate")] Customer customer)
     {
-        if (id != seller.Id)
+        if (id != customer.Id)
             return NotFound();
 
 
@@ -79,9 +79,9 @@ public class SellerController : Controller
         {
             try
             {
-                context.Update(seller);
+                context.Update(customer);
                 await context.SaveChangesAsync();
-                Ok(seller);
+                Ok(customer);
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateException)
@@ -102,12 +102,12 @@ public class SellerController : Controller
         if (id == null)
             return NotFound();
 
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
-        if (seller == null)
+        if (customer == null)
             return NotFound();
 
-        return View(seller);
+        return View(customer);
     }
 
     [HttpPost, ActionName("Delete")]
@@ -115,15 +115,15 @@ public class SellerController : Controller
     public async Task<IActionResult> DeleteConfirmed([FromServices] SalesWebDbContext context, int id)
     {
         
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
         if (ModelState.IsValid)
         {
             try
             {
-                context.Sellers.Remove(seller!);
+                context.Customers.Remove(customer!);
                 await context.SaveChangesAsync();
-                Ok(seller);
+                Ok(customer);
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateException)

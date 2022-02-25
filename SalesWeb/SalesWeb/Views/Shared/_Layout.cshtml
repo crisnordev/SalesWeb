@@ -24,7 +24,7 @@
                         <a class="dropdown-item" asp-controller="Seller" asp-action="Index">Sellers</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" asp-controller="Seller" asp-action="Create">New seller</a>
+                        <a class="dropdown-item" asp-controller="Seller" asp-action="Create">New Seller</a>
                     </li>
                 </ul>
             </div>
@@ -37,7 +37,20 @@
                         <a class="dropdown-item" asp-controller="Product" asp-action="Index">Products</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" asp-controller="Product" asp-action="Create">New product</a>
+                        <a class="dropdown-item" asp-controller="Product" asp-action="Create">New Product</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-group" role="group">
+                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Customers
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <a class="dropdown-item" asp-controller="Customer" asp-action="Index">Customers</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" asp-controller="Customer" asp-action="Create">New Customer</a>
                     </li>
                 </ul>
             </div>
