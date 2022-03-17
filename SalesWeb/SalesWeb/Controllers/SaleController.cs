@@ -200,7 +200,7 @@ public class SaleController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, "Unable to update product.");
+                return StatusCode(500, "Unable to delete Sale.");
             }
             catch (Exception)
             {

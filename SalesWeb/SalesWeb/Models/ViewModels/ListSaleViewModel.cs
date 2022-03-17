@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace SalesWeb.Models.ViewModels;
 
 public class ListSaleViewModel

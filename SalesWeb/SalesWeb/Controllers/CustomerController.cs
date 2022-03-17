@@ -94,7 +94,7 @@ public class CustomerController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, "Unable to update product.");
+                return StatusCode(500, "Unable to edit Customer.");
             }
             catch (Exception)
             {
@@ -136,7 +136,7 @@ public class CustomerController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, "Unable to update product.");
+                return StatusCode(500, "Unable to delete Customer.");
             }
             catch (Exception)
             {

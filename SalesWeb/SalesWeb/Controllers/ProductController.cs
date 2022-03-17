@@ -55,7 +55,7 @@ public class ProductController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(400, "This e-mail has already been used.");
+                return StatusCode(400, "Something is wrong.");
             }
         }
 
@@ -94,7 +94,7 @@ public class ProductController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, "Unable to update product.");
+                return StatusCode(500, "Unable to edit product.");
             }
             catch (Exception)
             {
