@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SalesWeb.Models.ViewModels;
 
 namespace SalesWeb.Controllers;
@@ -37,8 +38,11 @@ public class SaleController : Controller
         return View(saleView);
     }
 
-    public IActionResult Post()
+    public IActionResult Post([FromServices] SalesWebDbContext context)
     {
+        ViewData["CustomerId"] = new SelectList(context.Customers, "Id", "Name");
+        ViewData["SellerId"] = new SelectList(context.Sellers, "Id", "Name");
+        ViewData["ProductId"] = new SelectList(context.Products, "Id", "Name");
         return View();
     }
 
@@ -97,6 +101,10 @@ public class SaleController : Controller
     
     public async  Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id,  PutSaleViewModel model)
     {
+        ViewData["CustomerId"] = new SelectList(context.Customers, "Id", "Name");
+        ViewData["SellerId"] = new SelectList(context.Sellers, "Id", "Name");
+        ViewData["ProductId"] = new SelectList(context.Products, "Id", "Name");
+
         if (id == null) return NotFound();
         
         var sale = await context.Sales.AsNoTracking()

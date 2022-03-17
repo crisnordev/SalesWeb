@@ -10,24 +10,22 @@
         <thead>
         <tr class="success">
             <th>
-                <label asp-for="SellerId" class="contr-label"></label>
+                <label asp-for="SellerId" class="control-label"></label>
             </th>
             <th>
-                <label asp-for="CustomerId" class="contr-label"></label>
+                <label asp-for="CustomerId" class="control-label"></label>
             </th>
         </tr>
         </thead>
         <tbody>
         <td>
             <div class="form-group">
-                <input asp-for="SellerId" class="form-control"/>
-                <span asp-validation-for="SellerId" class="text-danger"></span>
+                <select asp-for="SellerId" class="form-control" asp-items="ViewBag.SellerId"></select>
             </div>
         </td>
         <td>
             <div class="form-group">
-                <input asp-for="CustomerId" class="form-control"/>
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
+                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
             </div>
         </td>
         </tbody>
@@ -37,7 +35,7 @@
         <thead>
         <tr class="success">
             <th>
-                <label asp-for="ProductId" class="contr-label"></label>
+                <label asp-for="ProductId" class="control-label"></label>
             </th>
             <th>
                 <label asp-for="ProductQuantity" class="contr-label"></label>
@@ -47,8 +45,7 @@
         <tbody>
         <td>
             <div class="form-group">
-                <input asp-for="ProductId" class="form-control"/>
-                <span asp-validation-for="ProductId" class="text-danger"></span>
+                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
             </div>
         </td>
         <td>

@@ -19,14 +19,12 @@
         <tbody>
         <td>
             <div class="form-group">
-                <input asp-for="SellerId" class="form-control"/>
-                <span asp-validation-for="SellerId" class="text-danger"></span>
+                <select asp-for="SellerId" class="form-control" asp-items="ViewBag.SellerId"></select>
             </div>
         </td>
         <td>
             <div class="form-group">
-                <input asp-for="CustomerId" class="form-control"/>
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
+                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
             </div>
         </td>
         </tbody>
@@ -81,8 +79,7 @@
         <tbody>
         <td>
             <div class="form-group">
-                <input asp-for="ProductId" class="form-control"/>
-                <span asp-validation-for="ProductId" class="text-danger"></span>
+                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
             </div>
         </td>
         <td>
