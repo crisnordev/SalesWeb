@@ -1,6 +1,6 @@
 namespace SalesWeb.Models.ViewModels;
 
-public class SaleViewModel
+public class CreateSaleViewModel
 {
     public Guid SaleId { get; set; }
     [DisplayName("Seller Id")]

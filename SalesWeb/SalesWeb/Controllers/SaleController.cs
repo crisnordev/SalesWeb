@@ -48,8 +48,9 @@ public class SaleController : Controller
 
     [HttpPost]
     [IgnoreAntiforgeryToken]
-    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, 
-        [Bind("SellerId,CustomerId,ProductId,ProductQuantity")] SaleViewModel model)
+    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context,
+        [Bind("SellerId,CustomerId,ProductId,ProductQuantity")]
+        CreateSaleViewModel model)
     {
         if (ModelState.IsValid)
         {
