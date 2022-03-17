@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 namespace SalesWeb.Data.Mappings;
 
 public class SellerMap : IEntityTypeConfiguration<Seller>
@@ -7,34 +9,26 @@ public class SellerMap : IEntityTypeConfiguration<Seller>
         builder.ToTable("Seller");
         
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id)
-            .ValueGeneratedOnAdd()
-            .UseIdentityColumn();
-        
         builder.Property(x => x.Name).
             IsRequired().
             HasColumnName("Name").
             HasColumnType("NVARCHAR").
-            HasMaxLength(80);
-        
+            HasMaxLength(160);
         builder.Property(x => x.Email).
             IsRequired().
             HasColumnName("Email").
             HasColumnType("VARCHAR").
             HasMaxLength(160);
-        
         builder.Property(x => x.Cpf).
             IsRequired().
             HasColumnName("Cpf").
             HasColumnType("VARCHAR").
             HasMaxLength(11);
-        
         builder.Property(x => x.Password).
             IsRequired().
             HasColumnName("Password").
             HasColumnType("VARCHAR").
             HasMaxLength(255);
-        
         builder.Property(x => x.BirthDate).
             IsRequired().
             HasColumnName("BirthDate").

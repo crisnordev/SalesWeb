@@ -11,7 +11,7 @@ public class SellerController : Controller
     }
     
     
-    public async Task<IActionResult> GetById([FromServices] SalesWebDbContext context, int id)
+    public async Task<IActionResult> GetById([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)
             return NotFound();
@@ -23,17 +23,26 @@ public class SellerController : Controller
         return View(seller);
     }
 
-    public IActionResult Create()
+    public IActionResult Post()
     {
         return View();
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([FromServices] SalesWebDbContext context, [Bind("Name,Email,Password,Cpf,BirthDate")] Seller seller)
+    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, [Bind("Name,Email,Password,Cpf,BirthDate")] Seller model)
     {
         if (ModelState.IsValid)
         {
+            var seller = new Seller
+            {
+                Id = Guid.NewGuid(),
+                Name = model.Name,
+                Email = model.Email,
+                Cpf = model.Cpf,
+                Password = model.Password,
+                BirthDate = model.BirthDate
+            };
             try
             {
                 context.Add(seller);
@@ -54,7 +63,7 @@ public class SellerController : Controller
     }
 
 
-    public async Task<IActionResult> Update([FromServices] SalesWebDbContext context, int id)
+    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)
             return NotFound();
@@ -69,7 +78,7 @@ public class SellerController : Controller
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update([FromServices] SalesWebDbContext context, int id, [Bind("Id,Name,Email,Cpf,Password,BirthDate")] Seller seller)
+    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id, [Bind("Name,Email,Cpf,Password,BirthDate")] Seller seller)
     {
         if (id != seller.Id)
             return NotFound();
@@ -97,7 +106,7 @@ public class SellerController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    public async Task<IActionResult> Delete([FromServices] SalesWebDbContext context, int id)
+    public async Task<IActionResult> Delete([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)
             return NotFound();
@@ -112,7 +121,7 @@ public class SellerController : Controller
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed([FromServices] SalesWebDbContext context, int id)
+    public async Task<IActionResult> DeleteConfirmed([FromServices] SalesWebDbContext context, Guid id)
     {
         
         var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);

@@ -1,18 +1,15 @@
 @model SalesWeb.Models.Product
 @{
-    ViewData["Title"] = "Update";
     Layout = "_Layout";
 }
-
-<h1>Update</h1>
-
-<h4>Product</h4>
+<h1>Product</h1>
+<hr/>
+<h4>Edit Product</h4>
 <hr/>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Update">
+        <form asp-action="Put">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id"/>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control"/>
@@ -29,7 +26,6 @@
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

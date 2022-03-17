@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 namespace SalesWeb.Data.Mappings;
 
 public class ProductMap : IEntityTypeConfiguration<Product>
@@ -7,19 +9,14 @@ public class ProductMap : IEntityTypeConfiguration<Product>
         builder.ToTable("Product");
         
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id)
-            .ValueGeneratedOnAdd()
-            .UseIdentityColumn();
-        
         builder.Property(x => x.Name).
             IsRequired().
             HasColumnName("Name").
             HasColumnType("NVARCHAR").
-            HasMaxLength(80);
-
+            HasMaxLength(160);
         builder.Property(x => x.Price).
             IsRequired().
             HasColumnName("Price")
-            .HasColumnType("decimal(18,2)");
+            .HasColumnType("DECIMAL(18,2)");
     }
 }

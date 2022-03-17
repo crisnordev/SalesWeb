@@ -1,0 +1,76 @@
+@model SalesWeb.Models.ViewModels.SaleViewModel
+@{
+    ViewData["Title"] = "Post";
+    Layout = "_Layout";
+}
+<h2>Sale</h2>
+<form asp-action="Post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr class="success">
+            <th>
+                <label asp-for="SellerId" class="contr-label"></label>
+            </th>
+            <th>
+                <label asp-for="CustomerId" class="contr-label"></label>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <td>
+            <div class="form-group">
+                <input asp-for="SellerId" class="form-control"/>
+                <span asp-validation-for="SellerId" class="text-danger"></span>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <input asp-for="CustomerId" class="form-control"/>
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
+        </td>
+        </tbody>
+    </table>
+    <hr/>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr class="success">
+            <th>
+                <label asp-for="ProductId" class="contr-label"></label>
+            </th>
+            <th>
+                <label asp-for="ProductQuantity" class="contr-label"></label>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <td>
+            <div class="form-group">
+                <input asp-for="ProductId" class="form-control"/>
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <input asp-for="ProductQuantity" class="form-control"/>
+                <span asp-validation-for="ProductQuantity" class="text-danger"></span>
+            </div>
+        </td>
+        <br>
+        <br>
+        </tbody>
+    </table>
+    <div class="form-group">
+        <input type="hidden" asp-for="SaleId"/>
+        <input type="submit" value="Confirm Product" class="btn btn-primary"/>
+    </div>
+</form>
+<br/>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

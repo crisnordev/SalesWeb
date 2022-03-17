@@ -1,12 +1,12 @@
-@model List<Seller>
+@model List<Sale> 
 @{
     Layout = "_Layout";
 }
-<h2>Sellers</h2>
+<h2>Sale</h2>
 <hr/>
 <p>
     <a asp-action="Post" class="btn btn-default">
-        <button>Create new Seller</button>
+        <button>Create new Sale</button>
     </a>
 </p>
 <hr/>
@@ -17,16 +17,13 @@
             @Html.DisplayNameFor(model => model[0].Id)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].Name)
+            @Html.DisplayNameFor(model => model[0].Seller.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].Email)
+            @Html.DisplayNameFor(model => model[0].Customer.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].Cpf)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model[0].BirthDate)
+            @Html.DisplayNameFor(model => model[0].TotalAmount)
         </th>
         <th></th>
     </tr>
@@ -39,16 +36,13 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Seller.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.Customer.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cpf)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BirthDate)
+                @Html.DisplayFor(modelItem => item.TotalAmount)
             </td>
             <td>
                 <a asp-action="Put" asp-route-id="@item.Id">Edit</a>
