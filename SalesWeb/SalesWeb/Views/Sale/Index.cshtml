@@ -2,11 +2,11 @@
 @{
     Layout = "_Layout";
 }
-<h2>Sale</h2>
+<h2>SALE</h2>
 <hr/>
 <p>
     <a asp-action="Post" class="btn btn-default">
-        <button>Create new Sale</button>
+        <button>CREATE NEW SALE</button>
     </a>
 </p>
 <hr/>
@@ -45,9 +45,9 @@
                 @Html.DisplayFor(modelItem => item.TotalAmount)
             </td>
             <td>
-                <a asp-action="Put" asp-route-id="@item.Id">Edit</a>
-                <a asp-action="GetById" asp-route-id="@item.Id">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Put" asp-route-id="@item.Id">EDIT</a>
+                <a asp-action="GetById" asp-route-id="@item.Id">DETAILS</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">DELETE</a>
             </td>
         </tr>
     }

@@ -2,13 +2,16 @@ namespace SalesWeb.Models.ViewModels;
 
 public class ListSaleViewModel
 {
-    [DisplayName("Sale Id")]
+    [DisplayName("SALE IDENTIFICATION")]
     public Guid SaleId { get; set; }
-    [DisplayName("Customer Name")]
+
+    [DisplayName("CUSTOMER NAME")]
     public string CustomerName { get; set; }
-    [DisplayName("Seller Name")]
+
+    [DisplayName("SELLER NAME")]
     public string SellerName { get; set; }
-    [DisplayName("Total Amount")]
+
+    [DisplayName("TOTAL")]
     public decimal TotalAmount { get; set; }
     public IList<SoldProduct> SoldProducts { get; set; } = new List<SoldProduct>();
 }

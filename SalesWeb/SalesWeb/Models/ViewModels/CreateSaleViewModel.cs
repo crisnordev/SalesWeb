@@ -2,13 +2,17 @@ namespace SalesWeb.Models.ViewModels;
 
 public class CreateSaleViewModel
 {
+    [DisplayName("SALE IDENTIFICATION")]
     public Guid SaleId { get; set; }
-    [DisplayName("Seller Id")]
-    public Guid SellerId { get; set; } 
-    [DisplayName("Customer Id")]
+
+    [DisplayName("SELLER IDENTIFICATION")] public Guid SellerId { get; set; }
+
+    [DisplayName("CUSTOMER IDENTIFICATION")]
     public Guid CustomerId { get; set; }
-    [DisplayName("Product Id")]
+
+    [DisplayName("PRODUCT IDENTIFICATION")]
     public Guid ProductId { get; set; }
-    [DisplayName("Quantity")]
+
+    [DisplayName("QUANTITY")]
     public int ProductQuantity { get; set; }
 }

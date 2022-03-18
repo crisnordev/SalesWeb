@@ -2,11 +2,11 @@
 @{
     Layout = "_Layout";
 }
-<h2>Sellers</h2>
+<h2>SELLERS</h2>
 <hr/>
 <p>
     <a asp-action="Post" class="btn btn-default">
-        <button>Create new Seller</button>
+        <button>CREATE NEW SELLER</button>
     </a>
 </p>
 <hr/>
@@ -23,7 +23,7 @@
             @Html.DisplayNameFor(model => model[0].Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].Cpf)
+            @Html.DisplayNameFor(model => model[0].DocumentId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].BirthDate)
@@ -45,15 +45,15 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cpf)
+                @Html.DisplayFor(modelItem => item.DocumentId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BirthDate)
             </td>
             <td>
-                <a asp-action="Put" asp-route-id="@item.Id">Edit</a>
-                <a asp-action="GetById" asp-route-id="@item.Id">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Put" asp-route-id="@item.Id">EDIT</a>
+                <a asp-action="GetById" asp-route-id="@item.Id">DETAILS</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">DELETE</a>
             </td>
         </tr>
     }

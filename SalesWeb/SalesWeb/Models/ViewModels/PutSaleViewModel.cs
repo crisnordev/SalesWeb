@@ -2,21 +2,27 @@ namespace SalesWeb.Models.ViewModels;
 
 public class PutSaleViewModel
 {
-    [DisplayName("Sale Id")]
+    [DisplayName("SALE IDENTIFICATION")]
     public Guid SaleId { get; set; }
-    [DisplayName("Customer Id")]
+
+    [DisplayName("CUSTOMER IDENTIFICATION")]
     public Guid CustomerId { get; set; }
-    [DisplayName("Customer Name")]
+
+    [DisplayName("CUSTOMER NAME")]
     public string CustomerName { get; set; } = String.Empty;
-    [DisplayName("Seller Id")] 
+
+    [DisplayName("SELLER NAME")]
     public Guid SellerId { get; set; }
-    [DisplayName("Seller Name")]
+
+    [DisplayName("SELLER NAME")]
     public string SellerName { get; set; } = String.Empty;
-    [DisplayName("Total Amount")]
+
+    [DisplayName("TOTAL")]
     public decimal TotalAmount { get; set; }
     public IList<SoldProduct> SoldProducts { get; set; } = new List<SoldProduct>();
-    [DisplayName("Product Id")]
+
+    [DisplayName("PRODUCT IDENTIFICATION")]
     public Guid ProductId { get; set; }
-    [DisplayName("Product Quantity")] 
-    public int ProductQuantity { get; set; } 
+
+    [DisplayName("QUANTITY")] public int ProductQuantity { get; set; }
 }

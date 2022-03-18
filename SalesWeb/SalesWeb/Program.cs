@@ -2,7 +2,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<SalesWebDbContext>();
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services
+    .AddControllersWithViews()
+    .ConfigureApiBehaviorOptions(options => { options.SuppressModelStateInvalidFilter = true; });
 
 var app = builder.Build();
 

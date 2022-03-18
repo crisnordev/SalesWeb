@@ -39,7 +39,7 @@ public class SellerController : Controller
                 Id = Guid.NewGuid(),
                 Name = model.Name,
                 Email = model.Email,
-                Cpf = model.Cpf,
+                DocumentId = model.DocumentId,
                 Password = model.Password,
                 BirthDate = model.BirthDate
             };

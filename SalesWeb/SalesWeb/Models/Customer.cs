@@ -2,18 +2,22 @@ namespace SalesWeb.Models;
 
 public class Customer
 {
+    [DisplayName("CUSTOMER IDENTIFICATION")]
     public Guid Id { get; set; }
     [Required(ErrorMessage = "This field is required.")]
     [StringLength(80, MinimumLength = 8, ErrorMessage = "This field must have between 8 and 80 characters.")]
+    [DisplayName("CUSTOMER NAME")]
     public string Name { get; set; }
     [Required(ErrorMessage = "This field is required.")]
     [EmailAddress(ErrorMessage = "This e-mail is invalid.")]
     [DataType(DataType.EmailAddress)]
-    public string Email { get; set; } 
+    [DisplayName("E-MAIL")]
+    public string Email { get; set; }
     [Required(ErrorMessage = "This field is required.")]
     [MaxLength(11, ErrorMessage = "This field must have 11 characters.")]
     [MinLength(11, ErrorMessage = "This field must have 11 characters.")]
-    public string Cpf { get; set; } 
+    [DisplayName("DOCUMENT IDENTIFICATION")]
+    public string DocumentId { get; set; }
     [Required(ErrorMessage = "This field is required.")]
     [Display(Name = "Birth Date")]
     [DataType(DataType.Date)]

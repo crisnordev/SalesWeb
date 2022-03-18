@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
 namespace SalesWeb.Data.Mappings;
 
 public class SellerMap : IEntityTypeConfiguration<Seller>
@@ -19,7 +17,7 @@ public class SellerMap : IEntityTypeConfiguration<Seller>
             HasColumnName("Email").
             HasColumnType("VARCHAR").
             HasMaxLength(160);
-        builder.Property(x => x.Cpf).
+        builder.Property(x => x.DocumentId).
             IsRequired().
             HasColumnName("Cpf").
             HasColumnType("VARCHAR").

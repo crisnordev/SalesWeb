@@ -2,9 +2,9 @@
 @{
     Layout = "_Layout";
 }
-<h1>Customer</h1>
+<h1>CUSTOMER</h1>
 <hr/>
-<h4>Edit Customer</h4>
+<h4>EDIT CUSTOMER</h4>
 <hr/>
 <div class="row">
     <div class="col-md-4">
@@ -21,9 +21,9 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cpf" class="control-label"></label>
-                <input asp-for="Cpf" class="form-control"/>
-                <span asp-validation-for="Cpf" class="text-danger"></span>
+                <label asp-for="DocumentId" class="control-label"></label>
+                <input asp-for="DocumentId" class="form-control"/>
+                <span asp-validation-for="DocumentId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="BirthDate" class="control-label"></label>
@@ -31,13 +31,13 @@
                 <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary"/>
+                <input type="submit" value="SAVE" class="btn btn-primary"/>
             </div>
         </form>
     </div>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">BACK TO LIST</a>
 </div>
 
 @section Scripts {
