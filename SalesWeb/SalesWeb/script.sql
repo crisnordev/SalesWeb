@@ -15,7 +15,7 @@ CREATE TABLE [Customer] (
     [Id] uniqueidentifier NOT NULL,
     [Name] NVARCHAR(160) NOT NULL,
     [Email] VARCHAR(160) NOT NULL,
-    [Cpf] VARCHAR(11) NOT NULL,
+    [DocumentId] VARCHAR(11) NOT NULL,
     [BirthDate] SMALLDATETIME NOT NULL DEFAULT (GETDATE()),
     CONSTRAINT [PK_Customer] PRIMARY KEY ([Id])
 );
@@ -33,7 +33,7 @@ CREATE TABLE [Seller] (
     [Id] uniqueidentifier NOT NULL,
     [Name] NVARCHAR(160) NOT NULL,
     [Email] VARCHAR(160) NOT NULL,
-    [Cpf] VARCHAR(11) NOT NULL,
+    [DocumentId] VARCHAR(11) NOT NULL,
     [Password] VARCHAR(255) NOT NULL,
     [BirthDate] SMALLDATETIME NOT NULL DEFAULT (GETDATE()),
     CONSTRAINT [PK_Seller] PRIMARY KEY ([Id])
@@ -64,8 +64,8 @@ CREATE TABLE [SaleSoldProduct] (
     [SaleId] uniqueidentifier NOT NULL,
     [SoldProductId] uniqueidentifier NOT NULL,
     CONSTRAINT [PK_SaleSoldProduct] PRIMARY KEY ([SaleId], [SoldProductId]),
-    CONSTRAINT [FK_SaleSoldProduct_Sale_SoldProductId] FOREIGN KEY ([SoldProductId]) REFERENCES [SoldProduct] ([Id]),
-    CONSTRAINT [FK_SaleSoldProduct_SoldProduct_SaleId] FOREIGN KEY ([SaleId]) REFERENCES [Sale] ([Id])
+    CONSTRAINT [FK_SaleSoldProduct_Sale_SoldProductId] FOREIGN KEY ([SoldProductId]) REFERENCES [SoldProduct] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_SaleSoldProduct_SoldProduct_SaleId] FOREIGN KEY ([SaleId]) REFERENCES [Sale] ([Id]) ON DELETE CASCADE
 );
 GO
 
@@ -79,7 +79,7 @@ CREATE INDEX [IX_SaleSoldProduct_SoldProductId] ON [SaleSoldProduct] ([SoldProdu
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20220316160347_FirstMigration', N'6.0.3');
+VALUES (N'20220320173532_FirstMigration', N'6.0.3');
 GO
 
 COMMIT;
