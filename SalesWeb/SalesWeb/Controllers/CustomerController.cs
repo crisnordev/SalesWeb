@@ -30,7 +30,9 @@ public class CustomerController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, [Bind("Name,Email,Cpf,BirthDate")] Customer model)
+    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context,
+        [Bind("Name,Email,DocumentId,BirthDate")]
+        Customer model)
     {
         if (ModelState.IsValid)
         {
@@ -77,7 +79,8 @@ public class CustomerController : Controller
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id, [Bind("Name,Email,Cpf,BirthDate")] Customer customer)
+    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id,
+        [Bind("Name,Email,DocumentId,BirthDate")] Customer customer)
     {
         if (id != customer.Id)
             return NotFound();

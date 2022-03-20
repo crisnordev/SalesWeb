@@ -18,8 +18,7 @@ public class SellerMap : IEntityTypeConfiguration<Seller>
             HasColumnType("VARCHAR").
             HasMaxLength(160);
         builder.Property(x => x.DocumentId).
-            IsRequired().
-            HasColumnName("Cpf").
+            IsRequired().HasColumnName("DocumentId").
             HasColumnType("VARCHAR").
             HasMaxLength(11);
         builder.Property(x => x.Password).

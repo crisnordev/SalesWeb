@@ -30,7 +30,8 @@ public class SellerController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, [Bind("Name,Email,Password,Cpf,BirthDate")] Seller model)
+    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context,
+        [Bind("Name,Email,Password,DocumentId,BirthDate")] Seller model)
     {
         if (ModelState.IsValid)
         {
@@ -78,7 +79,8 @@ public class SellerController : Controller
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id, [Bind("Name,Email,Cpf,Password,BirthDate")] Seller seller)
+    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id,
+        [Bind("Name,Email,DocumentId,Password,BirthDate")] Seller seller)
     {
         if (id != seller.Id)
             return NotFound();
