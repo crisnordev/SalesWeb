@@ -7,6 +7,11 @@ public class SoldProductMap : IEntityTypeConfiguration<SoldProduct>
         builder.ToTable("SoldProduct");
 
         builder.HasKey(x => x.Id);
+        builder.Property(x => x.ProductId)
+            .IsRequired()
+            .HasColumnName("ProductId")
+            .HasColumnType("VARCHAR")
+            .HasMaxLength(36);
         builder.Property(x => x.Name)
             .IsRequired()
             .HasColumnName("Name")

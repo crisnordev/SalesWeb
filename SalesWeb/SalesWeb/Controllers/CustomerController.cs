@@ -56,7 +56,7 @@ public class CustomerController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(400, "This e-mail has already been used.");
+                return StatusCode(400, "C-01C - This e-mail has already been used.");
             }
         }
 
@@ -97,11 +97,11 @@ public class CustomerController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, "Unable to edit Customer.");
+                return StatusCode(500, "C-02C - Unable to edit Customer.");
             }
             catch (Exception)
             {
-                return StatusCode(500, "Internal server error.");
+                return StatusCode(500, "C-03C - Internal server error.");
             }
         }
 
@@ -139,11 +139,11 @@ public class CustomerController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, "Unable to delete Customer.");
+                return StatusCode(500, "C-04C - Unable to delete Customer.");
             }
             catch (Exception)
             {
-                return StatusCode(500, "Internal server error.");
+                return StatusCode(500, "C-05C - Internal server error.");
             }
         }
 

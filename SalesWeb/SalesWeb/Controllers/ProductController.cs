@@ -55,7 +55,7 @@ public class ProductController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(400, "Something is wrong.");
+                return StatusCode(400, "C-01P - An issue has happen. Check information, and try again.");
             }
         }
 
@@ -94,11 +94,11 @@ public class ProductController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, "Unable to edit product.");
+                return StatusCode(500, "C-02P - Unable to edit product.");
             }
             catch (Exception)
             {
-                return StatusCode(500, "Internal server error.");
+                return StatusCode(500, "C-03P - Internal server error.");
             }
         }
 
@@ -136,11 +136,11 @@ public class ProductController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, "Unable to delete product.");
+                return StatusCode(500, "C-03P - Unable to delete product.");
             }
             catch (Exception)
             {
-                return StatusCode(500, "Internal server error.");
+                return StatusCode(500, "C-04P - Internal server error.");
             }
         }
 

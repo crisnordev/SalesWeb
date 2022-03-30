@@ -93,7 +93,7 @@ public class SaleController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(400, "Error.");
+                return StatusCode(400, "C-01S - An issue has happen. Check information, and try again.");
             }
         }
 
@@ -163,7 +163,11 @@ public class SaleController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(400, "Error.");
+                return StatusCode(500, "C-02S - Unable to edit sale.");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "C-03S - Internal server error.");
             }
         }
 

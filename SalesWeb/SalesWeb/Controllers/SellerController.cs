@@ -56,7 +56,7 @@ public class SellerController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(400, "This e-mail has already been used.");
+                return StatusCode(400, "C-01SE - This e-mail has already been used.");
             }
         }
 
@@ -97,11 +97,11 @@ public class SellerController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, "Unable to update product.");
+                return StatusCode(500, "C-02SE - Unable to update product.");
             }
             catch (Exception)
             {
-                return StatusCode(500, "Internal server error.");
+                return StatusCode(500, "C-03SE - Internal server error.");
             }
         }
 
@@ -139,11 +139,11 @@ public class SellerController : Controller
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, "Unable to update product.");
+                return StatusCode(500, "C-04SE - Unable to update product.");
             }
             catch (Exception)
             {
-                return StatusCode(500, "Internal server error.");
+                return StatusCode(500, "C-05SE - Internal server error.");
             }
         }
 
