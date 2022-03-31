@@ -1,3 +1,5 @@
+using SalesWeb.ViewModels.CustomerViewModels;
+
 namespace SalesWeb.Controllers;
 
 [Controller]
@@ -5,20 +7,18 @@ public class CustomerController : Controller
 {
     public async  Task<IActionResult> Index([FromServices] SalesWebDbContext context)
     {
-        
-        var customers = await context.Customers.AsNoTracking().ToListAsync();
+        var customersContext = await context.Customers.AsNoTracking().ToListAsync();
+        var customers = customersContext.Select(customer => (GetCustomerViewModel) customer).ToList();
         return  View(customers);
     }
     
     
     public async Task<IActionResult> GetById([FromServices] SalesWebDbContext context, Guid id)
     {
-        if (id == null)
-            return NotFound();
-
-        var customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-        if (customer == null)
-            return NotFound();
+        if (id == null) return NotFound();
+        var customer = new GetCustomerViewModel();
+        customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        if (customer == null) return NotFound();
 
         return View(customer);
     }
@@ -30,9 +30,7 @@ public class CustomerController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context,
-        [Bind("Name,Email,DocumentId,BirthDate")]
-        Customer model)
+    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, EditorCustomerViewModel model)
     {
         if (ModelState.IsValid)
         {
@@ -49,7 +47,7 @@ public class CustomerController : Controller
                 context.Add(customer);
                 await context.SaveChangesAsync();
                 
-                View(customer);
+                View(model);
                 
                 return RedirectToAction(nameof(Index));
 
@@ -68,8 +66,9 @@ public class CustomerController : Controller
     {
         if (id == null)
             return NotFound();
-            
-        var customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+        var customer = new EditorCustomerViewModel();
+        customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
         if (customer == null)
             return NotFound();
@@ -80,11 +79,12 @@ public class CustomerController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id,
-        [Bind("Name,Email,DocumentId,BirthDate")] Customer customer)
+        EditorCustomerViewModel model)
     {
-        if (id != customer.Id)
+        var customer = await context.Customers.FirstOrDefaultAsync(x => x.Id == id);
+        if (false | id != customer.Id)
             return NotFound();
-
+        customer = model;
 
         if (ModelState.IsValid)
         {

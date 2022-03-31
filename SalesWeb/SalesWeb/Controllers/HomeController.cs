@@ -1,4 +1,6 @@
-﻿namespace SalesWeb.Controllers;
+﻿using SalesWeb.ViewModels.ErrorViewModels;
+
+namespace SalesWeb.Controllers;
 
 public class HomeController : Controller
 {

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SalesWeb.Models.ViewModels;
+using SalesWeb.ViewModels.SaleViewModels;
 
 namespace SalesWeb.Controllers;
 

@@ -24,9 +24,9 @@ INSERT INTO [Sale] VALUES ('0d17eb4b-7cca-4fc6-9e0d-647cdf4f02ae', '468510b3-6c7
 
 USE [SalesWeb]
 GO
-INSERT INTO [SoldProduct] VALUES ('53cfea94-17ac-42ff-a277-49fd0fc9c463', 'Copo Descartável', 1, 3.99)
-INSERT INTO [SoldProduct] VALUES ('f0824f0a-0c25-43bd-ba28-93c277f7b721', 'Sacola Plástica', 1, 2.98)
-INSERT INTO [SoldProduct] VALUES ('c80354e7-c4f7-4554-85c4-7665698d2ca3', 'Saco de Lixo', 2, 32.50)
+INSERT INTO [SoldProduct] VALUES ('53cfea94-17ac-42ff-a277-49fd0fc9c463', '6aa66d6f-a740-4132-b0ea-6c2867f8209e', 'Copo Descartável', 1, 3.99)
+INSERT INTO [SoldProduct] VALUES ('f0824f0a-0c25-43bd-ba28-93c277f7b721', 'c9523f77-bf4f-46c2-9092-5b4a6a926f89', 'Sacola Plástica', 1, 2.98)
+INSERT INTO [SoldProduct] VALUES ('c80354e7-c4f7-4554-85c4-7665698d2ca3', '6769de2f-31ff-468d-8dba-deadb8d9f8ce', 'Saco de Lixo', 2, 32.50)
 
 USE [SalesWeb]
 GO
@@ -41,3 +41,7 @@ INSERT INTO [SaleSoldProduct] VALUES ('0d17eb4b-7cca-4fc6-9e0d-647cdf4f02ae', 'c
 -- INSERT INTO [SaleProduct] VALUES ('6aa66d6f-a740-4132-b0ea-6c2867f8209e', '6fa7455c-e020-4d13-9bb4-22636c75e786')
 -- INSERT INTO [SaleProduct] VALUES ('c9523f77-bf4f-46c2-9092-5b4a6a926f89', '58894be1-93ec-4f0e-8cf8-a9fcdcc4ce67')
 -- INSERT INTO [SaleProduct] VALUES ('6769de2f-31ff-468d-8dba-deadb8d9f8ce', '0d17eb4b-7cca-4fc6-9e0d-647cdf4f02ae')
+
+
+
+DROP DATABASE [SalesWeb]

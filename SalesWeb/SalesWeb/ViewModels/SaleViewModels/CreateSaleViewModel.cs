@@ -1,4 +1,4 @@
-namespace SalesWeb.Models.ViewModels;
+namespace SalesWeb.ViewModels.SaleViewModels;
 
 public class CreateSaleViewModel
 {
