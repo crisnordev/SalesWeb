@@ -1,24 +1,25 @@
+using SalesWeb.ViewModels.ProductViewModels;
+
 namespace SalesWeb.Controllers;
 
 [Controller]
 public class ProductController : Controller
 {
-    public async  Task<IActionResult> Index([FromServices] SalesWebDbContext context)
+    public async Task<IActionResult> Index([FromServices] SalesWebDbContext context)
     {
-        
-        List<Product> products = await context.Products.AsNoTracking().ToListAsync();
-        return  View(products);
+        var productsContext = await context.Products.AsNoTracking().ToListAsync();
+        var products = productsContext.Select(x => (GetProductViewModel) x).ToList();
+        return View(products);
     }
-    
-    
+
+
     public async Task<IActionResult> GetById([FromServices] SalesWebDbContext context, Guid id)
     {
-        if (id == null)
-            return NotFound();
+        if (id == null) return NotFound();
 
-        var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-        if (product == null)
-            return NotFound();
+        var product = new GetProductViewModel();
+        product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        if (product == null) return NotFound();
 
         return View(product);
     }
@@ -27,10 +28,10 @@ public class ProductController : Controller
     {
         return View();
     }
-    
+
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context,[Bind("Name,Price")] Product model)
+    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, EditorProductViewModel model)
     {
         if (ModelState.IsValid)
         {
@@ -42,16 +43,11 @@ public class ProductController : Controller
             };
             try
             {
-                if (product == null)
-                    return NotFound();
-
                 context.Add(product);
                 await context.SaveChangesAsync();
-                
-                View(product);
-                
-                return RedirectToAction(nameof(Index));
 
+                View(model);
+                return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateException)
             {
@@ -61,27 +57,26 @@ public class ProductController : Controller
 
         return View();
     }
-    
+
     public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id)
     {
-        if (id == null)
-            return NotFound();
-            
-        var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        if (id == null) return NotFound();
 
-        if (product == null)
-            return NotFound();
+        var product = new EditorProductViewModel();
+        product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        if (product == null) return NotFound();
 
         return View(product);
     }
-    
+
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id, [Bind("Name,Price")] Product product)
+    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id,
+        EditorProductViewModel model)
     {
-        if (id != product.Id)
-            return NotFound();
-
+        var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
+        if (product == null) return NotFound();
+        product = model;
 
         if (ModelState.IsValid)
         {
@@ -89,6 +84,7 @@ public class ProductController : Controller
             {
                 context.Update(product);
                 await context.SaveChangesAsync();
+
                 Ok(product);
                 return RedirectToAction(nameof(Index));
             }
@@ -107,13 +103,10 @@ public class ProductController : Controller
 
     public async Task<IActionResult> Delete([FromServices] SalesWebDbContext context, Guid id)
     {
-        if (id == null)
-            return NotFound();
+        if (id == null) return NotFound();
 
         var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-
-        if (product == null)
-            return NotFound();
+        if (product == null) return NotFound();
 
         return View(product);
     }
@@ -122,7 +115,6 @@ public class ProductController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed([FromServices] SalesWebDbContext context, Guid id)
     {
-        
         var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
         if (ModelState.IsValid)
@@ -131,6 +123,7 @@ public class ProductController : Controller
             {
                 context.Products.Remove(product!);
                 await context.SaveChangesAsync();
+
                 Ok(product);
                 return RedirectToAction(nameof(Index));
             }
@@ -146,6 +139,4 @@ public class ProductController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-
-
 }
