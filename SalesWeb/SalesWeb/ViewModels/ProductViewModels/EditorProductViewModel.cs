@@ -22,15 +22,4 @@ public class EditorProductViewModel
         };
         return editorProduct;
     }
-
-    public static implicit operator Product(EditorProductViewModel editorProductViewModel)
-    {
-        var product = new Product
-        {
-            Id = new Guid(),
-            Name = editorProductViewModel.Name,
-            Price = editorProductViewModel.Price
-        };
-        return product;
-    }
 }

@@ -1,3 +1,5 @@
+using SalesWeb.ViewModels.SellerViewModels;
+
 namespace SalesWeb.Controllers;
 
 [Controller]
@@ -6,19 +8,18 @@ public class SellerController : Controller
     public async  Task<IActionResult> Index([FromServices] SalesWebDbContext context)
     {
         
-        List<Seller> sellers = await context.Sellers.AsNoTracking().ToListAsync();
+        var sellersContext = await context.Sellers.AsNoTracking().ToListAsync();
+        var sellers = sellersContext.Select(x => (GetSellerViewModel) x).ToList();
         return  View(sellers);
     }
-    
-    
+
     public async Task<IActionResult> GetById([FromServices] SalesWebDbContext context, Guid id)
     {
-        if (id == null)
-            return NotFound();
+        if (id == null) return NotFound();
 
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-        if (seller == null)
-            return NotFound();
+        var seller = new GetSellerViewModel();
+        seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        if (seller == null) return NotFound();
 
         return View(seller);
     }
@@ -30,8 +31,7 @@ public class SellerController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context,
-        [Bind("Name,Email,Password,DocumentId,BirthDate")] Seller model)
+    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, EditorSellerViewModel model)
     {
         if (ModelState.IsValid)
         {
@@ -49,8 +49,7 @@ public class SellerController : Controller
                 context.Add(seller);
                 await context.SaveChangesAsync();
                 
-                View(seller);
-                
+                View(model);
                 return RedirectToAction(nameof(Index));
 
             }
@@ -66,13 +65,11 @@ public class SellerController : Controller
 
     public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id)
     {
-        if (id == null)
-            return NotFound();
-            
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        if (id == null) return NotFound();
 
-        if (seller == null)
-            return NotFound();
+        var seller = new EditorSellerViewModel();
+        seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        if (seller == null) return NotFound();
 
         return View(seller);
     }
@@ -80,11 +77,16 @@ public class SellerController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id,
-        [Bind("Name,Email,DocumentId,Password,BirthDate")] Seller seller)
+        EditorSellerViewModel model)
     {
-        if (id != seller.Id)
-            return NotFound();
-
+        var seller = await context.Sellers.FirstOrDefaultAsync(x => x.Id == id);
+        if (seller == null) return NotFound();
+        
+        seller.Name = model.Name;
+        seller.Email = model.Email;
+        seller.DocumentId = model.DocumentId;
+        seller.Password = model.Password;
+        seller.BirthDate = model.BirthDate;
 
         if (ModelState.IsValid)
         {
@@ -92,6 +94,7 @@ public class SellerController : Controller
             {
                 context.Update(seller);
                 await context.SaveChangesAsync();
+                
                 Ok(seller);
                 return RedirectToAction(nameof(Index));
             }
@@ -104,19 +107,16 @@ public class SellerController : Controller
                 return StatusCode(500, "C-03SE - Internal server error.");
             }
         }
-
         return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> Delete([FromServices] SalesWebDbContext context, Guid id)
     {
-        if (id == null)
-            return NotFound();
+        if (id == null) return NotFound();
 
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-
-        if (seller == null)
-            return NotFound();
+        var seller = new GetSellerViewModel();
+        seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        if (seller == null) return NotFound();
 
         return View(seller);
     }
@@ -146,8 +146,6 @@ public class SellerController : Controller
                 return StatusCode(500, "C-05SE - Internal server error.");
             }
         }
-
         return RedirectToAction(nameof(Index));
     }
-
 }

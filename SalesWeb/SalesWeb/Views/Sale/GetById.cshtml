@@ -1,4 +1,4 @@
-@model SalesWeb.ViewModels.SaleViewModels.ListSaleViewModel
+@model SalesWeb.ViewModels.SaleViewModels.GetSaleViewModel
 
 <h1>SALE</h1>
 <hr/>
@@ -6,7 +6,7 @@
     <thead>
     <tr class="success">
         <th>
-            @Html.DisplayNameFor(model => model.SaleId)
+            @Html.DisplayNameFor(model => model.Id)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SellerName)
@@ -21,7 +21,7 @@
     </thead>
     <tbody>
     <td>
-        @Html.DisplayFor(model => model.SaleId)
+        @Html.DisplayFor(model => model.Id)
     </td>
     <td>
         @Html.DisplayFor(model => model.SellerName)
@@ -72,7 +72,7 @@
 </table>
 <br>
 <div>
-    <a asp-action="Put" asp-route-id="@Model.SaleId">EDIT SALE</a> |
+    <a asp-action="Put" asp-route-id="@Model.Id">EDIT SALE</a> |
     <a asp-action="Index">BACK TO LIST</a>
 </div>
 

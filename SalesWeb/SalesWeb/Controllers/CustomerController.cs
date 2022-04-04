@@ -16,6 +16,7 @@ public class CustomerController : Controller
     public async Task<IActionResult> GetById([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null) return NotFound();
+        
         var customer = new GetCustomerViewModel();
         customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         if (customer == null) return NotFound();
@@ -76,8 +77,12 @@ public class CustomerController : Controller
         EditorCustomerViewModel model)
     {
         var customer = await context.Customers.FirstOrDefaultAsync(x => x.Id == id);
-        if (false | id != customer.Id) return NotFound();
-        customer = model;
+        if (customer == null) return NotFound();
+        
+        customer.Name = model.Name;
+        customer.Email = model.Email;
+        customer.DocumentId = model.DocumentId;
+        customer.BirthDate = model.BirthDate;
         
         if (ModelState.IsValid)
         {
@@ -105,7 +110,8 @@ public class CustomerController : Controller
     {
         if (id == null) return NotFound();
 
-        var customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var customer = new GetCustomerViewModel();
+        customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         if (customer == null) return NotFound();
 
         return View(customer);

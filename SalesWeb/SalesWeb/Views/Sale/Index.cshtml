@@ -1,4 +1,4 @@
-@model List<Sale> 
+@model List<SalesWeb.ViewModels.SaleViewModels.GetSaleViewModel> 
 @{
     Layout = "_Layout";
 }
@@ -17,10 +17,10 @@
             @Html.DisplayNameFor(model => model[0].Id)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].Seller.Name)
+            @Html.DisplayNameFor(model => model[0].SellerName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].Customer.Name)
+            @Html.DisplayNameFor(model => model[0].CustomerName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].TotalAmount)
@@ -36,10 +36,10 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Seller.Name)
+                @Html.DisplayFor(modelItem => item.SellerName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.Name)
+                @Html.DisplayFor(modelItem => item.CustomerName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TotalAmount)

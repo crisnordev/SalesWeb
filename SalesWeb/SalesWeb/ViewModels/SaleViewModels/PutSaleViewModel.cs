@@ -2,7 +2,7 @@ namespace SalesWeb.ViewModels.SaleViewModels;
 
 public class PutSaleViewModel
 {
-    [DisplayName("SALE IDENTIFICATION")] public Guid SaleId { get; set; }
+    [DisplayName("SALE IDENTIFICATION")] public Guid Id { get; set; }
 
     [DisplayName("CUSTOMER IDENTIFICATION")] public Guid CustomerId { get; set; }
 
@@ -18,4 +18,21 @@ public class PutSaleViewModel
     [DisplayName("PRODUCT IDENTIFICATION")] public Guid ProductId { get; set; }
 
     [DisplayName("QUANTITY")] public int ProductQuantity { get; set; }
+    
+    public static implicit operator PutSaleViewModel(Sale sale)
+    {
+        var putSale = new PutSaleViewModel
+        {
+            Id = sale.Id,
+            CustomerId = sale.Customer.Id,
+            CustomerName = sale.Customer.Name,
+            SellerId = sale.Seller.Id,
+            SellerName = sale.Seller.Name,
+            TotalAmount = sale.TotalAmount,
+            SoldProducts = sale.SoldProducts,
+            ProductId = new Guid(),
+            ProductQuantity = new int()
+        };
+        return putSale;
+    }
 }

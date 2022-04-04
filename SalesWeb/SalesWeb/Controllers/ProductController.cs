@@ -76,7 +76,9 @@ public class ProductController : Controller
     {
         var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
         if (product == null) return NotFound();
-        product = model;
+        
+        product.Name = model.Name;
+        product.Price = model.Price;
 
         if (ModelState.IsValid)
         {
@@ -105,7 +107,8 @@ public class ProductController : Controller
     {
         if (id == null) return NotFound();
 
-        var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var product = new GetProductViewModel();
+        product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         if (product == null) return NotFound();
 
         return View(product);

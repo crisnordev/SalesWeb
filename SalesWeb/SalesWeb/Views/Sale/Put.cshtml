@@ -92,13 +92,13 @@
         </tbody>
     </table>
     <div class="form-group">
-        <input type="hidden" asp-for="SaleId"/>
+        <input type="hidden" asp-for="Id"/>
         <input type="submit" value="CONFIRM PRODUCT" class="btn btn-primary"/>
     </div>
 </form>
 <br/>
 <div>
-    <a asp-action="GetById" asp-route-id="@Model.SaleId" class="btn btn-primary">Finish Sale</a>
+    <a asp-action="GetById" asp-route-id="@Model.Id" class="btn btn-primary">Finish Sale</a>
 </div>
 <br>
 <div>

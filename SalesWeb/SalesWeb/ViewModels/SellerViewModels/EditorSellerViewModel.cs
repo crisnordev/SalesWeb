@@ -1,6 +1,6 @@
-namespace SalesWeb.ViewModels.CustomerViewModels;
+namespace SalesWeb.ViewModels.SellerViewModels;
 
-public class EditorCustomerViewModel
+public class EditorSellerViewModel
 {
     [Required(ErrorMessage = "This field is required.")]
     [StringLength(80, MinimumLength = 8, ErrorMessage = "This field must have between 8 and 80 characters.")]
@@ -11,29 +11,34 @@ public class EditorCustomerViewModel
     [EmailAddress(ErrorMessage = "This e-mail is invalid.")]
     [DataType(DataType.EmailAddress)]
     [DisplayName("E-MAIL")]
-    public string Email { get; set; }
+    public string Email { get; set; } 
     
     [Required(ErrorMessage = "This field is required.")]
     [MaxLength(11, ErrorMessage = "This field must have 11 characters.")]
     [MinLength(11, ErrorMessage = "This field must have 11 characters.")]
     [DisplayName("DOCUMENT IDENTIFICATION")]
-    public string DocumentId { get; set; }
+    public string DocumentId { get; set; } 
     
     [Required(ErrorMessage = "This field is required.")]
-    [Display(Name = "Birth Date")]
+    [DisplayName("PASSWORD")]
+    public string Password { get; set; } 
+    
+    [Required(ErrorMessage = "This field is required.")]
+    [DisplayName("BIRTH DATE")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}")]
     public DateTime BirthDate { get; set; } = DateTime.Now;
-
-    public static implicit operator EditorCustomerViewModel(Customer customer)
+    
+    public static implicit operator EditorSellerViewModel(Seller seller)
     {
-        var editorCustomer = new EditorCustomerViewModel
+        var editorSeller = new EditorSellerViewModel
         {
-            Name = customer.Name,
-            Email = customer.Email,
-            DocumentId = customer.DocumentId,
-            BirthDate = customer.BirthDate
+            Name = seller.Name,
+            Email = seller.Email,
+            DocumentId = seller.DocumentId,
+            Password = seller.Password,
+            BirthDate = seller.BirthDate
         };
-        return editorCustomer;
+        return editorSeller;
     }
 }

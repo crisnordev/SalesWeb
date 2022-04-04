@@ -1,4 +1,4 @@
-@model SalesWeb.ViewModels.SaleViewModels.CreateSaleViewModel
+@model SalesWeb.ViewModels.SaleViewModels.PostSaleViewModel
 @{
     ViewData["Title"] = "Post";
     Layout = "_Layout";
@@ -59,7 +59,7 @@
         </tbody>
     </table>
     <div class="form-group">
-        <input type="hidden" asp-for="SaleId"/>
+        <input type="hidden" asp-for="Id"/>
         <input type="submit" value="CONFIRM PRODUCT" class="btn btn-primary"/>
     </div>
 </form>
