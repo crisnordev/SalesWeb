@@ -2,7 +2,20 @@ namespace SalesWeb.ViewModels.ErrorViewModels;
 
 public class ErrorViewModel
 {
-    public string? RequestId { get; set; }
+    public ErrorViewModel()
+    {
+        Errors = new List<string>();
+    }
+    
+    public ErrorViewModel(string error)
+    {
+        Errors.Add(error);
+    }
+    
+    public ErrorViewModel(List<string> errors)
+    {
+        Errors = errors;
+    }
 
-    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    public List<string> Errors { get; set; } = new();
 }
