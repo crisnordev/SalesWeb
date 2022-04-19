@@ -29,6 +29,7 @@ public class CustomerController : Controller
             var error = new ErrorViewModel("C-02C - Customer Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
+
         try
         {
             GetCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
@@ -57,6 +58,7 @@ public class CustomerController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-05C - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
+
         var customer = new Customer
         {
             Id = Guid.NewGuid(),
@@ -93,6 +95,7 @@ public class CustomerController : Controller
             var error = new ErrorViewModel("C-08C - Customer Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
+
         try
         {
             EditorCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
@@ -115,12 +118,14 @@ public class CustomerController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-10C - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
+
         var customer = await context.Customers.FirstOrDefaultAsync(x => x.Id == id);
         if (customer == null)
         {
             var error = new ErrorViewModel("C-11C - Can not find Customer.");
             return RedirectToAction(nameof(Error), error);
         }
+
         customer.Name = model.Name;
         customer.Email = model.Email;
         customer.DocumentId = model.DocumentId;
@@ -153,6 +158,7 @@ public class CustomerController : Controller
             var error = new ErrorViewModel("C-14C - Customer Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
+
         try
         {
             GetCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
@@ -176,12 +182,14 @@ public class CustomerController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-17C - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
+
         var customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         if (customer == null)
         {
             var error = new ErrorViewModel("C-18C - Can not find Customer.");
             return RedirectToAction(nameof(Error), error);
         }
+
         try
         {
             context.Customers.Remove(customer!);

@@ -29,6 +29,7 @@ public class ProductController : Controller
             var error = new ErrorViewModel("C-02P - Product Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
+
         try
         {
             GetProductViewModel product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
@@ -57,6 +58,7 @@ public class ProductController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-05C - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
+
         var product = new Product
         {
             Id = Guid.NewGuid(),
@@ -91,6 +93,7 @@ public class ProductController : Controller
             var error = new ErrorViewModel("C-08P - Product Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
+
         try
         {
             EditorProductViewModel product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
@@ -113,12 +116,14 @@ public class ProductController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-10P - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
+
         var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
         if (product == null)
         {
             var error = new ErrorViewModel("C-11P - Can not find Product.");
             return RedirectToAction(nameof(Error), error);
         }
+
         product.Name = model.Name;
         product.Price = model.Price;
         try
@@ -148,6 +153,7 @@ public class ProductController : Controller
             var error = new ErrorViewModel("C-14P - Product Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
+
         try
         {
             GetProductViewModel product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
@@ -171,12 +177,14 @@ public class ProductController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-17C - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
+
         var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         if (product == null)
         {
             var error = new ErrorViewModel("C-18C - Can not find Product.");
             return RedirectToAction(nameof(Error), error);
         }
+
         try
         {
             context.Products.Remove(product!);
