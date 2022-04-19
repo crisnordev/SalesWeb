@@ -7,4 +7,6 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using SalesWeb.Data;
 global using SalesWeb.Data.Mappings;
+global using SalesWeb.Extentions;
 global using SalesWeb.Models;
+global using SalesWeb.ViewModels.ErrorViewModels;

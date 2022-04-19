@@ -1,6 +1,4 @@
-using SalesWeb.Extentions;
 using SalesWeb.ViewModels.CustomerViewModels;
-using SalesWeb.ViewModels.ErrorViewModels;
 
 namespace SalesWeb.Controllers;
 
@@ -31,7 +29,6 @@ public class CustomerController : Controller
             var error = new ErrorViewModel("C-02C - Customer Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
-
         try
         {
             GetCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
@@ -57,10 +54,9 @@ public class CustomerController : Controller
     {
         if (!ModelState.IsValid)
         {
-            var error = new ErrorViewModel(ModelState.GetErrors("C-05C - Fail while validating model."));
+            var error = new ErrorViewModel(ModelState.GetErrors("C-05C - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
-
         var customer = new Customer
         {
             Id = Guid.NewGuid(),
@@ -97,11 +93,16 @@ public class CustomerController : Controller
             var error = new ErrorViewModel("C-08C - Customer Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
-
-        EditorCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-        if (customer != null) return View(customer);
-        var errorView = new ErrorViewModel("C-09C - Can not find Customer.");
-        return RedirectToAction(nameof(Error), errorView);
+        try
+        {
+            EditorCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return View(customer);
+        }
+        catch
+        {
+            var errorView = new ErrorViewModel("C-09C - Can not find Customer.");
+            return RedirectToAction(nameof(Error), errorView);
+        }
     }
 
     [HttpPut]
@@ -109,24 +110,21 @@ public class CustomerController : Controller
     public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id,
         EditorCustomerViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            var error = new ErrorViewModel(ModelState.GetErrors("C-10C - Can not validate this model."));
+            return RedirectToAction(nameof(Error), error);
+        }
         var customer = await context.Customers.FirstOrDefaultAsync(x => x.Id == id);
         if (customer == null)
         {
-            var error = new ErrorViewModel("C-10C - Can not find Customer.");
+            var error = new ErrorViewModel("C-11C - Can not find Customer.");
             return RedirectToAction(nameof(Error), error);
         }
-
         customer.Name = model.Name;
         customer.Email = model.Email;
         customer.DocumentId = model.DocumentId;
         customer.BirthDate = model.BirthDate;
-
-        if (!ModelState.IsValid)
-        {
-            var error = new ErrorViewModel(ModelState.GetErrors("C-11C - Fail while validating model."));
-            return RedirectToAction(nameof(Error), error);
-        }
-
         try
         {
             context.Update(customer);
@@ -155,17 +153,12 @@ public class CustomerController : Controller
             var error = new ErrorViewModel("C-14C - Customer Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
-
         try
         {
             GetCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-            if (customer == null)
-            {
-                var error = new ErrorViewModel("C-15C - Can not find Customer.");
-                return RedirectToAction(nameof(Error), error);
-            }
-
-            return View(customer);
+            if (customer != null) return View(customer);
+            var error = new ErrorViewModel("C-15C - Can not find Customer.");
+            return RedirectToAction(nameof(Error), error);
         }
         catch
         {
@@ -178,19 +171,17 @@ public class CustomerController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed([FromServices] SalesWebDbContext context, Guid id)
     {
+        if (!ModelState.IsValid)
+        {
+            var error = new ErrorViewModel(ModelState.GetErrors("C-17C - Can not validate this model."));
+            return RedirectToAction(nameof(Error), error);
+        }
         var customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         if (customer == null)
         {
-            var error = new ErrorViewModel("C-17C - Can not find Customer.");
+            var error = new ErrorViewModel("C-18C - Can not find Customer.");
             return RedirectToAction(nameof(Error), error);
         }
-
-        if (!ModelState.IsValid)
-        {
-            var error = new ErrorViewModel(ModelState.GetErrors("C-18C - Fail while validating model."));
-            return RedirectToAction(nameof(Error), error);
-        }
-
         try
         {
             context.Customers.Remove(customer!);
