@@ -6,13 +6,13 @@
     <thead>
     <tr class="success">
         <th>
-            @Html.DisplayNameFor(model => model.Id)
+            @Html.DisplayNameFor(model => model.SaleId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SellerName)
+            @Html.DisplayNameFor(model => model.Customer.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CustomerName)
+            @Html.DisplayNameFor(model => model.Seller.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TotalAmount)
@@ -21,13 +21,13 @@
     </thead>
     <tbody>
     <td>
-        @Html.DisplayFor(model => model.Id)
+        @Html.DisplayFor(model => model.SaleId)
     </td>
     <td>
-        @Html.DisplayFor(model => model.SellerName)
+        @Html.DisplayFor(model => model.Customer.Name.CompleteName)
     </td>
     <td>
-        @Html.DisplayFor(model => model.CustomerName)
+        @Html.DisplayFor(model => model.Seller.Name.CompleteName)
     </td>
     <td>
         @Html.DisplayFor(model => model.TotalAmount)
@@ -38,10 +38,10 @@
     <thead>
     <tr class="success">
         <th>
-            @Html.DisplayNameFor(model => model.SoldProducts[0].Id)
+            @Html.DisplayNameFor(model => model.SoldProducts[0].SoldProductId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SoldProducts[0].Name)
+            @Html.DisplayNameFor(model => model.SoldProducts[0].ProductName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SoldProducts[0].Quantity)
@@ -56,10 +56,10 @@
     {
         <tbody>
         <td>
-            @Html.DisplayFor(model => item.Id)
+            @Html.DisplayFor(model => item.SoldProductId)
         </td>
         <td>
-            @Html.DisplayFor(model => item.Name)
+            @Html.DisplayFor(model => item.ProductName)
         </td>
         <td>
             @Html.DisplayFor(model => item.Quantity)
@@ -72,7 +72,7 @@
 </table>
 <br>
 <div>
-    <a asp-action="Put" asp-route-id="@Model.Id">EDIT SALE</a> |
+    <a asp-action="Put" asp-route-id="@Model.SaleId">EDIT SALE</a> |
     <a asp-action="Index">BACK TO LIST</a>
 </div>
 

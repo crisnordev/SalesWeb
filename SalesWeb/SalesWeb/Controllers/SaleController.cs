@@ -1,12 +1,9 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SalesWeb.ViewModels.SaleViewModels;
-
 namespace SalesWeb.Controllers;
 
 [Controller]
 public class SaleController : Controller
 {
-    [HttpGet]
     public async Task<IActionResult> Index([FromServices] SalesWebDbContext context)
     {
         try
@@ -30,7 +27,6 @@ public class SaleController : Controller
         }
     }
 
-    [HttpGet]
     public async Task<IActionResult> GetById([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)
@@ -46,7 +42,7 @@ public class SaleController : Controller
                 .Include(x => x.Seller)
                 .Include(x => x.Customer)
                 .Include(x => x.SoldProducts)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.SaleId == id);
             if (sale != null) return View(sale);
             var error = new ErrorViewModel("C-03SA - Can not find Sale.");
             return RedirectToAction(nameof(Error), error);
@@ -58,15 +54,14 @@ public class SaleController : Controller
         }
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, PostSaleViewModel model)
+    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context)
     {
         try
         {
-            ViewData["CustomerId"] = new SelectList(context.Customers, "Id", "Name");
-            ViewData["SellerId"] = new SelectList(context.Sellers, "Id", "Name");
-            ViewData["ProductId"] = new SelectList(context.Products, "Id", "Name");
-            return View(model);
+            ViewData["CustomerId"] = new SelectList(context.Customers, "CustomerId", "Name", "CompleteName" );
+            ViewData["SellerId"] = new SelectList(context.Sellers, "SellerId", "Name", "CompleteName");
+            ViewData["ProductId"] = new SelectList(context.Products, "ProductId", "ProductName");
+            return View(new PostSaleViewModel());
         }
         catch
         {
@@ -75,9 +70,9 @@ public class SaleController : Controller
         }
     }
 
-    [HttpPost, ActionName("Post")]
+    [HttpPost]
     [IgnoreAntiforgeryToken]
-    public async Task<IActionResult> ConfirmPost([FromServices] SalesWebDbContext context, PostSaleViewModel model)
+    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, PostSaleViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -85,57 +80,30 @@ public class SaleController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var customer = await context.Customers.FirstOrDefaultAsync(x => x.Id == model.CustomerId);
-        if (customer == null)
-        {
-            var error = new ErrorViewModel("C-07SA - Can not find Customer.");
-            return RedirectToAction(nameof(Error), error);
-        }
-
-        var seller = await context.Sellers.FirstOrDefaultAsync(x => x.Id == model.SellerId);
-        if (seller == null)
-        {
-            var error = new ErrorViewModel("C-08SA - Can not find Seller.");
-            return RedirectToAction(nameof(Error), error);
-        }
+        var customer = await context.Customers.FirstOrDefaultAsync(x => x.CustomerId == model.CustomerId);
+        var seller = await context.Sellers.FirstOrDefaultAsync(x => x.SellerId == model.SellerId);
+        var product = await context.Products.FirstOrDefaultAsync(x => x.ProductId == model.ProductId);
 
         var sale = new Sale
         {
-            Id = Guid.NewGuid(),
+            SaleId = Guid.NewGuid(),
             Customer = customer,
             Seller = seller,
-            TotalAmount = 0,
-            SoldProducts = new List<SoldProduct>()
+            TotalAmount = model.ProductQuantity * product.Price,
+            SoldProduct = new SoldProduct(Guid.NewGuid(), product.ProductId, product.ProductName, model.ProductQuantity, product.Price)
         };
-        var product = await context.Products.FirstOrDefaultAsync(x => x.Id == model.ProductId);
-        if (product == null)
-        {
-            var error = new ErrorViewModel("C-09SA - Can not find Product.");
-            return RedirectToAction(nameof(Error), error);
-        }
-
-        sale.TotalAmount = model.ProductQuantity * product.Price;
-        var soldProduct = new SoldProduct
-        {
-            Id = Guid.NewGuid(),
-            ProductId = product.Id.ToString(),
-            Name = product.Name,
-            Quantity = model.ProductQuantity,
-            Price = product.Price,
-            Sales = new List<Sale>()
-        };
-        sale.SoldProducts.Add(soldProduct);
+        sale.SoldProducts.Add(sale.SoldProduct);
 
         try
         {
             await context.Sales.AddAsync(sale);
-            await context.SoldProducts.AddAsync(soldProduct);
+            await context.SoldProducts.AddAsync(sale.SoldProduct);
             await context.SaveChangesAsync();
             Ok(sale);
-            Ok(soldProduct);
+            Ok(sale.SoldProduct);
 
             View(model);
-            return RedirectToAction(nameof(Put), new {sale.Id});
+            return RedirectToAction(nameof(Put), new {sale.SaleId});
         }
         catch (DbUpdateException)
         {
@@ -149,52 +117,34 @@ public class SaleController : Controller
         }
     }
 
-    [HttpPut]
-    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id, PutSaleViewModel model)
+    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id)
     {
-        if (!ModelState.IsValid)
-        {
-            var error = new ErrorViewModel(ModelState.GetErrors("C-12SA - Can not validate this model."));
-            return RedirectToAction(nameof(Error), error);
-        }
-
-        if (id == null)
-        {
-            var error = new ErrorViewModel("C-13SA - Sale Identification can not be null.");
-            return RedirectToAction(nameof(Error), error);
-        }
-
         try
         {
-            ViewData["CustomerId"] = new SelectList(context.Customers, "Id", "Name");
-            ViewData["SellerId"] = new SelectList(context.Sellers, "Id", "Name");
-            ViewData["ProductId"] = new SelectList(context.Products, "Id", "Name");
+            var sale = await context.Sales.AsNoTracking()
+                .Include(x => x.Seller)
+                .Include(x => x.Customer)
+                .Include(x => x.SoldProducts)
+                .FirstOrDefaultAsync(x => x.SaleId == id);
+
+            var putSaleViewModel = new PutSaleViewModel(sale.Customer.Name.CompleteName, sale.Seller.Name.CompleteName, 
+                sale.TotalAmount);
+            putSaleViewModel.SoldProducts.AddRange(sale.SoldProducts);
+            
+            ViewData["ProductId"] = new SelectList(context.Products, "ProductId", "ProductName");
+            
+            return View(putSaleViewModel);
         }
         catch
         {
             var error = new ErrorViewModel("C-14SA - Internal server error.");
             return RedirectToAction(nameof(Error), error);
         }
-
-        var sale = await context.Sales.AsNoTracking()
-            .Include(x => x.Seller)
-            .Include(x => x.Customer)
-            .Include(x => x.SoldProducts)
-            .FirstOrDefaultAsync(x => x.Id == id);
-        if (sale == null)
-        {
-            var error = new ErrorViewModel("C-15SA - Internal server error.");
-            return RedirectToAction(nameof(Error), error);
-        }
-
-        model = sale;
-        return View(model);
     }
 
-    [HttpPut, ActionName("Put")]
+    [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> PutSaleProduct([FromServices] SalesWebDbContext context, Guid id,
-        PutSaleViewModel model)
+    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id, PutSaleViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -202,29 +152,18 @@ public class SaleController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var sale = await context.Sales.FirstOrDefaultAsync(x => x.Id == id);
-        if (sale == null)
-        {
-            var error = new ErrorViewModel("C-17SA - Can not find Sale.");
-            return RedirectToAction(nameof(Error), error);
-        }
+        var sale = await context.Sales
+            .Include(x => x.Customer)
+            .Include(x => x.Seller)
+            .Include(x => x.SoldProducts)
+            .FirstOrDefaultAsync(x => x.SaleId == id);
 
-        var product = await context.Products.FirstOrDefaultAsync(x => x.Id == model.ProductId);
-        if (product == null)
-        {
-            var error = new ErrorViewModel("C-18SA - Can not find Product.");
-            return RedirectToAction(nameof(Error), error);
-        }
+        var product = await context.Products.FirstOrDefaultAsync(x => x.ProductId == model.ProductId);
 
         sale.TotalAmount += model.ProductQuantity * product.Price;
-        var soldProduct = new SoldProduct
-        {
-            Id = Guid.NewGuid(),
-            ProductId = product.Id.ToString(),
-            Name = product.Name,
-            Quantity = model.ProductQuantity,
-            Price = product.Price
-        };
+        
+        var soldProduct = new SoldProduct(Guid.NewGuid(), product.ProductId, product.ProductName,
+            model.ProductQuantity, product.Price);
         sale.SoldProducts.Add(soldProduct);
 
         try
@@ -236,7 +175,7 @@ public class SaleController : Controller
             Ok(soldProduct);
 
             View(model);
-            return RedirectToAction(nameof(Put), new {sale.Id});
+            return RedirectToAction(nameof(Put), new {sale.SaleId});
         }
         catch (DbUpdateException)
         {
@@ -250,7 +189,6 @@ public class SaleController : Controller
         }
     }
 
-    [HttpDelete]
     public async Task<IActionResult> Delete([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)
@@ -262,7 +200,7 @@ public class SaleController : Controller
         GetSaleViewModel sale = await context.Sales.AsNoTracking()
             .Include(x => x.Seller)
             .Include(x => x.Customer)
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x => x.SaleId == id);
         if (sale != null) return View(sale);
         var errorSale = new ErrorViewModel("C-22SA - Can not find Sale.");
         return RedirectToAction(nameof(Error), errorSale);
@@ -282,26 +220,14 @@ public class SaleController : Controller
             .Include(x => x.Seller)
             .Include(x => x.Customer)
             .Include(x => x.SoldProducts)
-            .FirstOrDefaultAsync(x => x.Id == id);
-        if (sale == null)
-        {
-            var error = new ErrorViewModel("C-24SA - Can not find Sale.");
-            return RedirectToAction(nameof(Error), error);
-        }
-
+            .FirstOrDefaultAsync(x => x.SaleId == id);
+        
         var soldProducts = await context.SoldProducts.ToListAsync();
+        
         try
         {
             foreach (var product in sale.SoldProducts)
-            {
-                if (product == null)
-                {
-                    var error = new ErrorViewModel("C-25SA - Can not find Product.");
-                    return RedirectToAction(nameof(Error), error);
-                }
-
                 soldProducts.Remove(product);
-            }
 
             context.Sales.Remove(sale!);
             await context.SaveChangesAsync();

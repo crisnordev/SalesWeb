@@ -10,23 +10,28 @@
         <thead>
         <tr class="success">
             <th>
-                <label asp-for="SellerId" class="contr-label"></label>
+                @Html.DisplayNameFor(model => model.Seller)
             </th>
             <th>
-                <label asp-for="CustomerId" class="contr-label"></label>
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAmount)
             </th>
         </tr>
         </thead>
         <tbody>
         <td>
-            <div class="form-group">
-                <select asp-for="SellerId" class="form-control" asp-items="ViewBag.SellerId"></select>
-            </div>
+            @Html.DisplayFor(model => model.Seller)
+            <input type="hidden" asp-for="Seller"/>
         </td>
         <td>
-            <div class="form-group">
-                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
-            </div>
+            @Html.DisplayFor(model => model.Customer)
+            <input type="hidden" asp-for="Customer"/>
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.TotalAmount)
+            <input type="hidden" asp-for="TotalAmount"/>
         </td>
         </tbody>
     </table>
@@ -35,10 +40,10 @@
         <thead>
         <tr class="success">
             <th>
-                @Html.DisplayNameFor(model => model.SoldProducts[0].Id)
+                @Html.DisplayNameFor(model => model.SoldProducts[0].ProductId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SoldProducts[0].Name)
+                @Html.DisplayNameFor(model => model.SoldProducts[0].ProductName)
             </th>
             <th>
             @Html.DisplayNameFor(model => model.SoldProducts[0].Quantity)
@@ -52,10 +57,10 @@
         {
             <tbody>
             <td>
-                @Html.DisplayFor(model => item.Id)
+                @Html.DisplayFor(model => item.ProductId)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Name)
+                @Html.DisplayFor(model => item.ProductName.ProductFullName)
             </td>
             <td>
                 @Html.DisplayFor(model => item.Quantity)
@@ -92,13 +97,13 @@
         </tbody>
     </table>
     <div class="form-group">
-        <input type="hidden" asp-for="Id"/>
+        <input type="hidden" asp-for="SaleId"/>
         <input type="submit" value="CONFIRM PRODUCT" class="btn btn-primary"/>
     </div>
 </form>
 <br/>
 <div>
-    <a asp-action="GetById" asp-route-id="@Model.Id" class="btn btn-primary">Finish Sale</a>
+    <a asp-action="GetById" asp-route-id="@Model.SaleId" class="btn btn-primary">Finish Sale</a>
 </div>
 <br>
 <div>

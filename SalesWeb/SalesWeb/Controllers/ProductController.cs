@@ -5,7 +5,6 @@ namespace SalesWeb.Controllers;
 [Controller]
 public class ProductController : Controller
 {
-    [HttpGet]
     public async Task<IActionResult> Index([FromServices] SalesWebDbContext context)
     {
         try
@@ -21,7 +20,6 @@ public class ProductController : Controller
         }
     }
 
-    [HttpGet]
     public async Task<IActionResult> GetById([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)
@@ -32,7 +30,7 @@ public class ProductController : Controller
 
         try
         {
-            GetProductViewModel product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            GetProductViewModel product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.ProductId == id);
             if (product != null) return View(product);
             var error = new ErrorViewModel("C-03P - Can not find Product.");
             return RedirectToAction(nameof(Error), error);
@@ -61,8 +59,8 @@ public class ProductController : Controller
 
         var product = new Product
         {
-            Id = Guid.NewGuid(),
-            Name = model.Name,
+            ProductId = Guid.NewGuid(),
+            ProductName = model.ProductName,
             Price = model.Price
         };
         try
@@ -85,7 +83,6 @@ public class ProductController : Controller
         }
     }
 
-    [HttpPut]
     public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)
@@ -96,7 +93,7 @@ public class ProductController : Controller
 
         try
         {
-            EditorProductViewModel product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            EditorProductViewModel product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.ProductId == id);
             return View(product);
         }
         catch
@@ -117,14 +114,14 @@ public class ProductController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
+        var product = await context.Products.FirstOrDefaultAsync(x => x.ProductId == id);
         if (product == null)
         {
             var error = new ErrorViewModel("C-11P - Can not find Product.");
             return RedirectToAction(nameof(Error), error);
         }
 
-        product.Name = model.Name;
+        product.ProductName = model.ProductName;
         product.Price = model.Price;
         try
         {
@@ -156,7 +153,7 @@ public class ProductController : Controller
 
         try
         {
-            GetProductViewModel product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            GetProductViewModel product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.ProductId == id);
             if (product != null) return View(product);
             var error = new ErrorViewModel("C-15P - Can not find Product.");
             return RedirectToAction(nameof(Error), error);
@@ -178,7 +175,7 @@ public class ProductController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.ProductId == id);
         if (product == null)
         {
             var error = new ErrorViewModel("C-18C - Can not find Product.");

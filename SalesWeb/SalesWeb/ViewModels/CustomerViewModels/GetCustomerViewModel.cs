@@ -2,15 +2,17 @@ namespace SalesWeb.ViewModels.CustomerViewModels;
 
 public class GetCustomerViewModel
 {
-    [DisplayName("CUSTOMER IDENTIFICATION")] public Guid Id { get; set; }
+    public GetCustomerViewModel(){}
+    
+    [DisplayName("Customer Id")] public Guid CustomerId { get; set; }
 
-    [DisplayName("NAME")] public string Name { get; set; }
+    [DisplayName("Customer name")] public Name Name { get; set; } 
     
-    [DisplayName("E-MAIL")] public string Email { get; set; }
+    [DisplayName("E-mail")] public Email Email { get; set; }
     
-    [DisplayName("DOCUMENT IDENTIFICATION")]  public string DocumentId { get; set; }
+    [DisplayName("Document Id")] public DocumentIdentificationNumber DocumentIdentificationNumber { get; set; }
     
-    [Display(Name = "Birth Date")]
+    [DisplayName("Birth Date")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}")]
     public DateTime BirthDate { get; set; }
@@ -19,10 +21,10 @@ public class GetCustomerViewModel
     {
         var getCustomer = new GetCustomerViewModel
         {
-            Id = customer.Id,
+            CustomerId = customer.CustomerId,
             Name = customer.Name,
             Email = customer.Email,
-            DocumentId = customer.DocumentId,
+            DocumentIdentificationNumber = customer.DocumentIdentificationNumber,
             BirthDate = customer.BirthDate
         };
         return getCustomer;

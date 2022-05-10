@@ -2,18 +2,27 @@ namespace SalesWeb.ViewModels.ProductViewModels;
 
 public class GetProductViewModel
 {
-    [DisplayName("PRODUCT IDENTIFICATION")] public Guid Id { get; set; }
+    public GetProductViewModel(){}
+
+    public GetProductViewModel(Guid productId, string productName, decimal price)
+    {
+        ProductId = productId;
+        ProductName = productName;
+        Price = price;
+    }
+
+    [DisplayName("Product Id")] public Guid ProductId { get; set; }
     
-    [DisplayName("NAME")] public string Name { get; set; }
+    [DisplayName("Name")] public string ProductName { get; set; }
     
-    [DisplayName("PRICE")] public decimal Price { get; set; }
+    [DisplayName("Price")] public decimal Price { get; set; }
 
     public static implicit operator GetProductViewModel(Product product)
     {
         var getProduct = new GetProductViewModel
         {
-            Id = product.Id,
-            Name = product.Name,
+            ProductId = product.ProductId,
+            ProductName = product.ProductName,
             Price = product.Price
         };
         return getProduct;

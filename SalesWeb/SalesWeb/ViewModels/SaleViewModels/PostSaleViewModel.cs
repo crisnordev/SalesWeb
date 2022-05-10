@@ -2,27 +2,29 @@ namespace SalesWeb.ViewModels.SaleViewModels;
 
 public class PostSaleViewModel
 {
-    [DisplayName("SALE IDENTIFICATION")] public Guid Id { get; set; }
-    
-    [DisplayName("CUSTOMER IDENTIFICATION")] public Guid CustomerId { get; set; }
+    public PostSaleViewModel(){}
 
-    [DisplayName("SELLER IDENTIFICATION")] public Guid SellerId { get; set; }
-
-    [DisplayName("PRODUCT IDENTIFICATION")] public Guid ProductId { get; set; } 
-
-    [DisplayName("QUANTITY")] public int ProductQuantity { get; set; }
-
-    
-    public static implicit operator Sale(PostSaleViewModel model)
+    public PostSaleViewModel(Guid saleId, Guid customerId, Guid sellerId, Guid productId, int productQuantity, decimal totalAmount)
     {
-        var createSale = new Sale
-        {
-            Id = model.Id,
-            Customer = new Customer(),
-            Seller = new Seller(),
-            TotalAmount = new decimal(),
-            SoldProducts = new List<SoldProduct>()
-        };
-        return createSale;
+        SaleId = saleId;
+        CustomerId = customerId;
+        SellerId = sellerId;
+        ProductId = productId;
+        ProductQuantity = productQuantity;
+        TotalAmount = totalAmount;
     }
+    
+    [DisplayName("Sale Id")] public Guid SaleId { get; set; }
+
+    [DisplayName("Customer")] public Guid CustomerId { get; set; }
+
+    [DisplayName("Seller")] public Guid SellerId { get; set; }
+
+    [DisplayName("Product")] public Guid ProductId { get; set; }
+    
+    [DisplayName("Quantity")] public int ProductQuantity { get; set; }
+
+    [DisplayName("Total")] 
+    [DataType(DataType.Currency)]
+    public decimal TotalAmount { get; set; }
 }

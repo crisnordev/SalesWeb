@@ -8,7 +8,7 @@
     <thead>
     <tr class="success">
         <th>
-            @Html.DisplayNameFor(model => model.Id)
+            @Html.DisplayNameFor(model => model.SellerId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -17,7 +17,7 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DocumentId)
+            @Html.DisplayNameFor(model => model.DocumentIdentificationNumber)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.BirthDate)
@@ -27,16 +27,16 @@
     </thead>
     <tbody>
     <td>
-        @Html.DisplayFor(model => model.Id)
+        @Html.DisplayFor(model => model.SellerId)
     </td>
     <td>
-        @Html.DisplayFor(model => model.Name)
+        @Html.DisplayFor(model => model.Name.CompleteName)
     </td>
     <td>
-        @Html.DisplayFor(model => model.Email)
+        @Html.DisplayFor(model => model.Email.Address)
     </td>
     <td>
-        @Html.DisplayFor(model => model.DocumentId)
+        @Html.DisplayFor(model => model.DocumentIdentificationNumber.Number)
     </td>
     <td>
         @Html.DisplayFor(model => model.BirthDate)
@@ -44,7 +44,7 @@
     </tbody>
 </table>
 <div>
-    <a asp-action="Put" asp-route-id="@Model.Id">EDIT</a> |
+    <a asp-action="Put" asp-route-id="@Model.SellerId">EDIT</a> |
     <a asp-action="Index">BACK TO LIST</a>
 </div>
 

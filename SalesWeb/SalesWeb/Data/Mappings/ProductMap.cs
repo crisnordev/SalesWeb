@@ -8,15 +8,18 @@ public class ProductMap : IEntityTypeConfiguration<Product>
     {
         builder.ToTable("Product");
         
-        builder.HasKey(x => x.Id);
-        builder.Property(x => x.Name).
-            IsRequired().
-            HasColumnName("Name").
-            HasColumnType("NVARCHAR").
-            HasMaxLength(160);
-        builder.Property(x => x.Price).
-            IsRequired().
-            HasColumnName("Price")
-            .HasColumnType("DECIMAL(18,2)");
+        builder.HasKey(x => x.ProductId);
+        
+        builder.OwnsOne(x => x.ProductName)
+            .Property(x => x.ProductFullName)
+            .HasColumnName("ProductName")
+            .HasColumnType("VARCHAR")
+            .HasMaxLength(160)
+            .IsRequired();
+        
+        builder.Property(x => x.Price)
+            .HasColumnName("Price")
+            .HasColumnType("DECIMAL(18,2)")
+            .IsRequired();
     }
 }

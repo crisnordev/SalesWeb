@@ -1,3 +1,4 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model List<SalesWeb.ViewModels.CustomerViewModels.GetCustomerViewModel>
 @{
     Layout = "_Layout";
@@ -14,7 +15,7 @@
     <thead>
     <tr class="success">
         <th>
-            @Html.DisplayNameFor(model => model[0].Id)
+            @Html.DisplayNameFor(model => model[0].CustomerId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].Name)
@@ -23,7 +24,7 @@
             @Html.DisplayNameFor(model => model[0].Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].DocumentId)
+            @Html.DisplayNameFor(model => model[0].DocumentIdentificationNumber)
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].BirthDate)
@@ -36,24 +37,24 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.CustomerId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Name.CompleteName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.Email.Address)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DocumentId)
+                @Html.DisplayFor(modelItem => item.DocumentIdentificationNumber.Number)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BirthDate)
             </td>
             <td>
-                <a asp-action="Put" asp-route-id="@item.Id">EDIT</a>
-                <a asp-action="GetById" asp-route-id="@item.Id">DETAILS</a>
-                <a asp-action="Delete" asp-route-id="@item.Id">DELETE</a>
+                <a asp-action="Put" asp-route-id="@item.CustomerId">EDIT</a>
+                <a asp-action="GetById" asp-route-id="@item.CustomerId">DETAILS</a>
+                <a asp-action="Delete" asp-route-id="@item.CustomerId">DELETE</a>
             </td>
         </tr>
     }

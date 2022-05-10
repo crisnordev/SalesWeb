@@ -2,15 +2,26 @@ namespace SalesWeb.Models;
 
 public class SoldProduct
 {
-    public Guid Id { get; set; }
-    
-    [DisplayName("PRODUCT IDENTIFICATION")] public string ProductId { get; set; }
+    public SoldProduct(){}
 
-    [DisplayName("NAME")] public string Name { get; set; }
-    
-    [DisplayName("QUANTITY")] public int Quantity { get; set; }
+    public SoldProduct(Guid soldProductId, Guid productId, ProductName productName, int quantity, decimal price)
+    {
+        SoldProductId = soldProductId;
+        ProductId = productId;
+        ProductName = productName;
+        Quantity = quantity;
+        Price = price;
+    }
 
-    [DisplayName("PRICE")] public decimal Price { get; set; }
+    public Guid SoldProductId { get; set; }
+    
+    public Guid ProductId { get; set; }
+
+    public ProductName ProductName { get; set; }
+    
+    public int Quantity { get; set; }
+    
+    public decimal Price { get; set; }
     
     public IList<Sale> Sales { get; set; } = new List<Sale>();
 }
