@@ -1,3 +1,4 @@
+using SalesWeb.Services.ProductServices;
 using SalesWeb.ViewModels.ProductViewModels;
 
 namespace SalesWeb.Controllers;
@@ -5,14 +6,11 @@ namespace SalesWeb.Controllers;
 [Controller]
 public class ProductController : Controller
 {
-    [HttpGet]
     public async Task<IActionResult> Index([FromServices] SalesWebDbContext context)
     {
         try
         {
-            var productsContext = await context.Products.AsNoTracking().ToListAsync();
-            var products = productsContext.Select(x => (GetProductViewModel) x).ToList();
-            return View(products);
+            return View(await new GetProductService().Get(context));
         }
         catch
         {
@@ -21,8 +19,7 @@ public class ProductController : Controller
         }
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetById([FromServices] SalesWebDbContext context, Guid id)
+    public async Task<IActionResult> GetById([FromServices] SalesWebDbContext context, int id)
     {
         if (id == null)
         {
@@ -32,10 +29,7 @@ public class ProductController : Controller
 
         try
         {
-            GetProductViewModel product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-            if (product != null) return View(product);
-            var error = new ErrorViewModel("C-03P - Can not find Product.");
-            return RedirectToAction(nameof(Error), error);
+            return View(await new GetByIdProductService().GetById(context, id));
         }
         catch
         {
@@ -51,32 +45,18 @@ public class ProductController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, EditorProductViewModel model)
+    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, PostPutProductViewModel model)
     {
         if (!ModelState.IsValid)
         {
             var error = new ErrorViewModel(ModelState.GetErrors("C-05C - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
-
-        var product = new Product
-        {
-            Id = Guid.NewGuid(),
-            Name = model.Name,
-            Price = model.Price
-        };
+        
         try
         {
-            context.Add(product);
-            await context.SaveChangesAsync();
-
-            View(model);
+            View(await new PostProductService().Post(context, model));
             return RedirectToAction(nameof(Index));
-        }
-        catch (DbUpdateException)
-        {
-            var error = new ErrorViewModel("C-06P - This Product has already been added.");
-            return RedirectToAction(nameof(Error), error);
         }
         catch
         {
@@ -85,8 +65,7 @@ public class ProductController : Controller
         }
     }
 
-    [HttpPut]
-    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id)
+    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, int id)
     {
         if (id == null)
         {
@@ -96,8 +75,7 @@ public class ProductController : Controller
 
         try
         {
-            EditorProductViewModel product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-            return View(product);
+            return View(await new PutProductService().GetById(context, id));
         }
         catch
         {
@@ -108,8 +86,8 @@ public class ProductController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id,
-        EditorProductViewModel model)
+    public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, int id,
+        PutProductViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -117,36 +95,20 @@ public class ProductController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
-        if (product == null)
-        {
-            var error = new ErrorViewModel("C-11P - Can not find Product.");
-            return RedirectToAction(nameof(Error), error);
-        }
-
-        product.Name = model.Name;
-        product.Price = model.Price;
         try
         {
-            context.Update(product);
-            await context.SaveChangesAsync();
-
-            Ok(product);
+            View(await new PutProductService().Put(context, id, model));
             return RedirectToAction(nameof(Index));
         }
-        catch (DbUpdateException)
-        {
-            var error = new ErrorViewModel("C-12P - Unable to update this Product, check data, and try again.");
-            return RedirectToAction(nameof(Error), error);
-        }
-        catch
+        catch (Exception ex)
         {
             var error = new ErrorViewModel("C-13P - Internal server error.");
+            error.Errors.Add(ex.Message);
             return RedirectToAction(nameof(Error), error);
         }
     }
 
-    public async Task<IActionResult> Delete([FromServices] SalesWebDbContext context, Guid id)
+    public async Task<IActionResult> Delete([FromServices] SalesWebDbContext context, int id)
     {
         if (id == null)
         {
@@ -156,21 +118,19 @@ public class ProductController : Controller
 
         try
         {
-            GetProductViewModel product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-            if (product != null) return View(product);
-            var error = new ErrorViewModel("C-15P - Can not find Product.");
-            return RedirectToAction(nameof(Error), error);
+            return View(await new DeleteProductService().GetById(context, id)); 
         }
-        catch
+        catch (Exception ex)
         {
             var error = new ErrorViewModel("C-16P - Internal server error.");
+            error.Errors.Add(ex.Message);
             return RedirectToAction(nameof(Error), error);
         }
     }
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed([FromServices] SalesWebDbContext context, Guid id)
+    public async Task<IActionResult> DeleteConfirmed([FromServices] SalesWebDbContext context, int id)
     {
         if (!ModelState.IsValid)
         {
@@ -178,25 +138,10 @@ public class ProductController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-        if (product == null)
-        {
-            var error = new ErrorViewModel("C-18C - Can not find Product.");
-            return RedirectToAction(nameof(Error), error);
-        }
-
         try
         {
-            context.Products.Remove(product!);
-            await context.SaveChangesAsync();
-
-            Ok(product);
+            View(await new DeleteProductService().Delete(context, id));
             return RedirectToAction(nameof(Index));
-        }
-        catch (DbUpdateException)
-        {
-            var error = new ErrorViewModel("C-19P - Can not delete this Product.");
-            return RedirectToAction(nameof(Error), error);
         }
         catch
         {

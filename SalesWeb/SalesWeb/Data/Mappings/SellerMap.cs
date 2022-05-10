@@ -6,31 +6,74 @@ public class SellerMap : IEntityTypeConfiguration<Seller>
     {
         builder.ToTable("Seller");
         
-        builder.HasKey(x => x.Id);
-        builder.Property(x => x.Name).
-            IsRequired().
-            HasColumnName("Name").
-            HasColumnType("NVARCHAR").
-            HasMaxLength(160);
-        builder.Property(x => x.Email).
-            IsRequired().
-            HasColumnName("Email").
-            HasColumnType("VARCHAR").
-            HasMaxLength(160);
-        builder.Property(x => x.DocumentId).
-            IsRequired().HasColumnName("DocumentId").
-            HasColumnType("VARCHAR").
-            HasMaxLength(11);
-        builder.Property(x => x.Password).
-            IsRequired().
-            HasColumnName("Password").
-            HasColumnType("VARCHAR").
-            HasMaxLength(255);
-        builder.Property(x => x.BirthDate).
-            IsRequired().
-            HasColumnName("BirthDate").
-            HasColumnType("SMALLDATETIME").
-            HasMaxLength(60).
-            HasDefaultValueSql("GETDATE()");
+        builder.HasKey(x => x.SellerId);
+        
+        builder.OwnsOne(x => x.Name)
+            .Property(x => x.FirstName)
+            .HasColumnName("FirstName")
+            .HasMaxLength(60)
+            .IsRequired();
+        
+        builder.OwnsOne(x => x.Name)
+            .Property(x => x.LastName)
+            .HasColumnName("LastName")
+            .HasMaxLength(120)
+            .IsRequired();
+        
+        builder.OwnsOne(x => x.Name)
+            .Property(x => x.FullName)
+            .HasColumnName("CompleteName")
+            .HasMaxLength(180)
+            .IsRequired();
+
+        builder.OwnsOne(x => x.Email)
+            .Property(x => x.Address)
+            .HasColumnName("Email")
+            .HasColumnType("VARCHAR")
+            .HasMaxLength(160)
+            .IsRequired();
+
+        builder.OwnsOne(x => x.Email)
+            .Property(x => x.Confirmed)
+            .HasColumnName("EmailConfirmed")
+            .IsRequired();
+
+        builder.OwnsOne(x => x.Email, nest =>
+        {
+            nest.OwnsOne(x => x.VerificationCode, code =>
+            {
+                code.Property(x => x.Code)
+                    .HasColumnName("EmailVerificationCode")
+                    .HasMaxLength(8)
+                    .IsRequired();
+                
+                code.Property(x => x.ExpirationDate)
+                    .HasColumnName("EmailExpirationDate")
+                    .HasMaxLength(60);
+                
+                code.Property(x => x.Verified)
+                    .HasColumnName("CodeVerified")
+                    .IsRequired();
+            });
+        });
+        
+        builder.OwnsOne(x => x.DocumentIdentificationNumber)
+            .Property(x => x.Number)
+            .HasColumnName("DocumentIdentificationNumber")
+            .HasColumnType("VARCHAR")
+            .HasMaxLength(14)
+            .IsRequired();
+
+        builder.Property(x => x.Password)
+            .HasColumnName("Password")
+            .HasColumnType("VARCHAR")
+            .HasMaxLength(255)
+            .IsRequired();
+
+        builder.Property(x => x.BirthDate)
+            .HasColumnName("BirthDate")
+            .HasColumnType("SMALLDATETIME")
+            .HasMaxLength(60)
+            .IsRequired();
     }
 }

@@ -10,22 +10,22 @@
         <thead>
         <tr class="success">
             <th>
-                <label asp-for="SellerId" class="control-label"></label>
+                <label asp-for="CustomerId" class="control-label"></label>
             </th>
             <th>
-                <label asp-for="CustomerId" class="control-label"></label>
+                <label asp-for="SellerId" class="control-label"></label>
             </th>
         </tr>
         </thead>
         <tbody>
         <td>
             <div class="form-group">
-                <select asp-for="SellerId" class="form-control" asp-items="ViewBag.SellerId"></select>
+                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
             </div>
         </td>
         <td>
             <div class="form-group">
-                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+                <select asp-for="SellerId" class="form-control" asp-items="ViewBag.SellerId"></select>
             </div>
         </td>
         </tbody>
@@ -54,14 +54,15 @@
                 <span asp-validation-for="ProductQuantity" class="text-danger"></span>
             </div>
         </td>
+        <td>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary"/>
+            </div>
+        </td>
         <br>
         <br>
         </tbody>
     </table>
-    <div class="form-group">
-        <input type="hidden" asp-for="Id"/>
-        <input type="submit" value="CONFIRM PRODUCT" class="btn btn-primary"/>
-    </div>
 </form>
 <br/>
 <div>

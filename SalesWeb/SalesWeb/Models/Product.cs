@@ -2,9 +2,18 @@ namespace SalesWeb.Models;
 
 public class Product
 {
-    public Guid Id { get; set; }
+    public Product(){}
+
+    public Product(int productId, ProductName productName, decimal price)
+    {
+        ProductId = productId;
+        ProductName = productName;
+        Price = price;
+    }
+
+    public int ProductId { get; set; }
     
-    public string Name { get; set; }
+    public ProductName ProductName { get; set; } 
     
     public decimal Price { get; set; }
 }

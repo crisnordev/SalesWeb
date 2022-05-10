@@ -1,4 +1,4 @@
-@model SalesWeb.ViewModels.SellerViewModels.EditorSellerViewModel
+@model SalesWeb.ViewModels.SellerViewModels.PostSellerViewModel
 @{
     Layout = "_Layout";
 }
@@ -11,9 +11,14 @@
         <form asp-action="Post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="contr-label"></label>
-                <input asp-for="Name" class="form-control"/>
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="FirstName" class="contr-label"></label>
+                <input asp-for="FirstName" class="form-control"/>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="contr-label"></label>
+                <input asp-for="LastName" class="form-control"/>
+                <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="contr-label"></label>
@@ -21,9 +26,9 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DocumentId" class="contr-label"></label>
-                <input asp-for="DocumentId" class="form-control"/>
-                <span asp-validation-for="DocumentId" class="text-danger"></span>
+                <label asp-for="DocumentIdentificationNumber" class="contr-label"></label>
+                <input asp-for="DocumentIdentificationNumber" class="form-control"/>
+                <span asp-validation-for="DocumentIdentificationNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="contr-label"></label>

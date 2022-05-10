@@ -10,23 +10,28 @@
         <thead>
         <tr class="success">
             <th>
-                <label asp-for="SellerId" class="contr-label"></label>
+                @Html.DisplayNameFor(model => model.Seller)
             </th>
             <th>
-                <label asp-for="CustomerId" class="contr-label"></label>
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAmount)
             </th>
         </tr>
         </thead>
         <tbody>
         <td>
-            <div class="form-group">
-                <select asp-for="SellerId" class="form-control" asp-items="ViewBag.SellerId"></select>
-            </div>
+            @Html.DisplayFor(model => model.Seller)
+            <input type="hidden" asp-for="Seller"/>
         </td>
         <td>
-            <div class="form-group">
-                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
-            </div>
+            @Html.DisplayFor(model => model.Customer)
+            <input type="hidden" asp-for="Customer"/>
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.TotalAmount)
+            <input type="hidden" asp-for="TotalAmount"/>
         </td>
         </tbody>
     </table>
@@ -35,33 +40,39 @@
         <thead>
         <tr class="success">
             <th>
-                @Html.DisplayNameFor(model => model.SoldProducts[0].Id)
+                @Html.DisplayName("Product Id")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SoldProducts[0].Name)
+                @Html.DisplayName("Name")
             </th>
             <th>
-            @Html.DisplayNameFor(model => model.SoldProducts[0].Quantity)
+            @Html.DisplayName("Quantity")
 
             <th>
-                @Html.DisplayNameFor(model => model.SoldProducts[0].Price)
+                @Html.DisplayName("Price")
             </th>
+            <th></th>
         </tr>
         </thead>
         @foreach (var item in Model.SoldProducts)
         {
             <tbody>
             <td>
-                @Html.DisplayFor(model => item.Id)
+                @Html.DisplayFor(model => item.ProductId)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Name)
+                @Html.DisplayFor(model => item.ProductName.ProductFullName)
             </td>
             <td>
                 @Html.DisplayFor(model => item.Quantity)
             </td>
             <td>
                 @Html.DisplayFor(model => item.Price)
+            </td>
+            <td>
+                @*<a asp-action="Put" asp-route-id="@item.ProductId">Edit</a>    this will be calling product quantity individual edit *@
+                @*<a asp-action="Put" asp-route-id="@item.ProductId">Delete</a>   this will be calling product individual delete*@
+                <a asp-controller="Product" asp-action="Post" asp-route-id="@item.ProductId">Edit Product</a>
             </td>
             </tbody>
         }
@@ -89,17 +100,14 @@
                 <span asp-validation-for="ProductQuantity" class="text-danger"></span>
             </div>
         </td>
+        <td>
+            <div>
+                <input type="submit" value="Add" class="btn btn-primary"/>
+            </div>
+        </td>
         </tbody>
     </table>
-    <div class="form-group">
-        <input type="hidden" asp-for="Id"/>
-        <input type="submit" value="CONFIRM PRODUCT" class="btn btn-primary"/>
-    </div>
 </form>
-<br/>
-<div>
-    <a asp-action="GetById" asp-route-id="@Model.Id" class="btn btn-primary">Finish Sale</a>
-</div>
 <br>
 <div>
     <a asp-action="Index" class="btn btn-primary">BACK TO LIST</a>

@@ -6,13 +6,13 @@
     <thead>
     <tr class="success">
         <th>
-            @Html.DisplayNameFor(model => model.Id)
+            @Html.DisplayNameFor(model => model.SaleId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SellerName)
+            @Html.DisplayNameFor(model => model.Customer)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CustomerName)
+            @Html.DisplayNameFor(model => model.Seller)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TotalAmount)
@@ -21,13 +21,13 @@
     </thead>
     <tbody>
     <td>
-        @Html.DisplayFor(model => model.Id)
+        @Html.DisplayFor(model => model.SaleId)
     </td>
     <td>
-        @Html.DisplayFor(model => model.SellerName)
+        @Html.DisplayFor(model => model.Customer)
     </td>
     <td>
-        @Html.DisplayFor(model => model.CustomerName)
+        @Html.DisplayFor(model => model.Seller)
     </td>
     <td>
         @Html.DisplayFor(model => model.TotalAmount)
@@ -38,10 +38,10 @@
     <thead>
     <tr class="success">
         <th>
-            @Html.DisplayNameFor(model => model.SoldProducts[0].Id)
+            @Html.DisplayNameFor(model => model.SoldProducts[0].ProductId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SoldProducts[0].Name)
+            @Html.DisplayNameFor(model => model.SoldProducts[0].ProductName.ProductFullName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SoldProducts[0].Quantity)
@@ -49,6 +49,7 @@
         <th>
             @Html.DisplayNameFor(model => model.SoldProducts[0].Price)
         </th>
+        <th></th>
     </tr>
     </thead>
 
@@ -56,10 +57,10 @@
     {
         <tbody>
         <td>
-            @Html.DisplayFor(model => item.Id)
+            @Html.DisplayFor(model => item.ProductId)
         </td>
         <td>
-            @Html.DisplayFor(model => item.Name)
+            @Html.DisplayFor(model => item.ProductName.ProductFullName)
         </td>
         <td>
             @Html.DisplayFor(model => item.Quantity)
@@ -67,12 +68,19 @@
         <td>
             @Html.DisplayFor(model => item.Price)
         </td>
+        <td>
+            @*<a asp-action="Put" asp-route-id="@item.ProductId">Edit</a>    this will be calling product quantity individual edit *@
+            @*<a asp-action="Put" asp-route-id="@item.ProductId">Delete</a>   this will be calling product individual delete*@
+            <a asp-controller="Product" asp-action="Put" asp-route-id="@item.ProductId">Edit Product</a>
+        </td>
         </tbody>
     }
 </table>
-<br>
 <div>
-    <a asp-action="Put" asp-route-id="@Model.Id">EDIT SALE</a> |
+    <a asp-action="Put" asp-route-id="@Model.SaleId" class="btn btn-primary">Add new product</a>
+</div>
+<br/>
+<div>
     <a asp-action="Index">BACK TO LIST</a>
 </div>
 

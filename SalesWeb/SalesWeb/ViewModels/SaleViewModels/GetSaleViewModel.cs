@@ -2,26 +2,26 @@ namespace SalesWeb.ViewModels.SaleViewModels;
 
 public class GetSaleViewModel
 {
-    [DisplayName("SALE IDENTIFICATION")] public Guid Id { get; set; }
-
-    [DisplayName("CUSTOMER NAME")] public string CustomerName { get; set; }
-
-    [DisplayName("SELLER NAME")] public string SellerName { get; set; }
-
-    [DisplayName("TOTAL")] public decimal TotalAmount { get; set; }
-    
-    public IList<SoldProduct> SoldProducts { get; set; } = new List<SoldProduct>();
-    
-    public static implicit operator GetSaleViewModel(Sale sale)
+    public GetSaleViewModel()
     {
-        var getSale = new GetSaleViewModel
-        {
-            Id = sale.Id,
-            CustomerName = sale.Customer.Name,
-            SellerName = sale.Seller.Name,
-            TotalAmount = sale.TotalAmount,
-            SoldProducts = sale.SoldProducts
-        };
-        return getSale;
     }
+
+    public GetSaleViewModel(Guid saleId, string customer, string seller, decimal totalAmount)
+    {
+        SaleId = saleId;
+        Customer = customer;
+        Seller = seller;
+        TotalAmount = totalAmount;
+        SoldProducts = new List<SoldProduct>();
+    }
+
+    [DisplayName("Sale Id")] public Guid SaleId { get; set; }
+
+    [DisplayName("Customer")] public string Customer { get; set; }
+
+    [DisplayName("Seller")] public string Seller { get; set; }
+
+    [DisplayName("Total")] public decimal TotalAmount { get; set; }
+
+    public List<SoldProduct> SoldProducts { get; set; }
 }

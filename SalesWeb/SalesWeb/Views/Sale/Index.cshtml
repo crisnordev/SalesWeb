@@ -14,13 +14,13 @@
     <thead>
     <tr class="success">
         <th>
-            @Html.DisplayNameFor(model => model[0].Id)
+            @Html.DisplayNameFor(model => model[0].SaleId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].SellerName)
+            @Html.DisplayNameFor(model => model[0].Customer)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].CustomerName)
+            @Html.DisplayNameFor(model => model[0].Seller)
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].TotalAmount)
@@ -33,21 +33,21 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.SaleId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SellerName)
+                @Html.DisplayFor(modelItem => item.Customer)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CustomerName)
+                @Html.DisplayFor(modelItem => item.Seller)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TotalAmount)
             </td>
             <td>
-                <a asp-action="Put" asp-route-id="@item.Id">EDIT</a>
-                <a asp-action="GetById" asp-route-id="@item.Id">DETAILS</a>
-                <a asp-action="Delete" asp-route-id="@item.Id">DELETE</a>
+                <a asp-action="Put" asp-route-id="@item.SaleId">Edit</a>
+                <a asp-action="GetById" asp-route-id="@item.SaleId">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.SaleId">Delete</a>
             </td>
         </tr>
     }

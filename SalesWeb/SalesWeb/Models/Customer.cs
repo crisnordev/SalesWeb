@@ -2,13 +2,24 @@ namespace SalesWeb.Models;
 
 public class Customer
 {
-    public Guid Id { get; set; } 
+    protected Customer(){}
     
-    public string Name { get; set; } = string.Empty;
+    public Customer(Guid customerId, Name name, Email email, DocumentIdentificationNumber documentIdentificationNumber, DateTime birthDate)
+    {
+        CustomerId = customerId;
+        Name = name;
+        Email = email;
+        DocumentIdentificationNumber = documentIdentificationNumber;
+        BirthDate = birthDate;
+    }
+
+    public Guid CustomerId { get; set; }
     
-    public string Email { get; set; } = string.Empty;
+    public Name Name { get; set; } 
     
-    public string DocumentId { get; set; } = string.Empty;
+    public Email Email { get; set; } 
+    
+    public DocumentIdentificationNumber DocumentIdentificationNumber { get; set; } 
     
     public DateTime BirthDate { get; set; } = DateTime.Now;
 }

@@ -6,24 +6,28 @@ public class SoldProductMap : IEntityTypeConfiguration<SoldProduct>
     {
         builder.ToTable("SoldProduct");
 
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.SoldProductId);
+        
         builder.Property(x => x.ProductId)
-            .IsRequired()
             .HasColumnName("ProductId")
+            .HasColumnType("SMALLINT")
+            .IsRequired();
+        
+        builder.OwnsOne(x => x.ProductName)
+            .Property(x => x.ProductFullName)
+            .HasColumnName("ProductName")
             .HasColumnType("VARCHAR")
-            .HasMaxLength(36);
-        builder.Property(x => x.Name)
-            .IsRequired()
-            .HasColumnName("Name")
-            .HasColumnType("VARCHAR")
-            .HasMaxLength(160);
+            .HasMaxLength(160)
+            .IsRequired();
+        
         builder.Property(x => x.Quantity)
-            .IsRequired()
             .HasColumnName("Quantity")
-            .HasColumnType("INT");
+            .HasColumnType("INT")
+            .IsRequired();
+        
         builder.Property(x => x.Price)
-            .IsRequired()
             .HasColumnName("Price")
-            .HasColumnType("DECIMAL(18, 2)");
+            .HasColumnType("DECIMAL(18, 2)")
+            .IsRequired();
     }
 }
