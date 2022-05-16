@@ -4,13 +4,13 @@ public class Sale
 {
     public Sale(){}
 
-    public Sale(Guid saleId, Customer customer, Seller seller, decimal totalAmount, SoldProduct soldProduct)
+    public Sale(Guid saleId, Customer customer, Seller seller, decimal totalAmount)
     {
         SaleId = saleId;
         Customer = customer;
         Seller = seller;
         TotalAmount = totalAmount;
-        SoldProduct = soldProduct;
+        SoldProducts = new List<SoldProduct>();
     }
 
     public Guid SaleId { get; set; }
@@ -21,7 +21,5 @@ public class Sale
 
     public decimal TotalAmount { get; set; }
     
-    [NotMapped] public SoldProduct SoldProduct { get; set; }
-
-    public IList<SoldProduct> SoldProducts { get; set; } = new List<SoldProduct>();
+    public IList<SoldProduct> SoldProducts { get; set; } 
 }

@@ -60,11 +60,6 @@ public class CustomerController : Controller
             View(await new PostCustomerService().Post(context, model));
             return RedirectToAction(nameof(Index));
         }
-        // catch (DbUpdateException)
-        // {
-        //     var error = new ErrorViewModel("C-05C - This e-mail has already been used.");
-        //     return RedirectToAction(nameof(Error), error);
-        // }
         catch (Exception exception)
         {
             var error = new ErrorViewModel("C-06C - Internal server error.");
@@ -105,14 +100,9 @@ public class CustomerController : Controller
         }
         try
         {
-            Ok(await new PutCustomerService().Put(context, id, model));
+            View(await new PutCustomerService().Put(context, id, model));
             return RedirectToAction(nameof(Index));
         }
-        // catch (DbUpdateException)
-        // {
-        //     var error = new ErrorViewModel("C-12C - Unable to update this Customer, check data, and try again.");
-        //     return RedirectToAction(nameof(Error), error);
-        // }
         catch (Exception exception)
         {
             var error = new ErrorViewModel("C-13C - Internal server error.");
@@ -152,14 +142,9 @@ public class CustomerController : Controller
         }
         try
         {
-            Ok(await new DeleteCustomerService().Delete(context, id));
+            View(await new DeleteCustomerService().Delete(context, id));
             return RedirectToAction(nameof(Index));
         }
-        // catch (DbUpdateException)
-        // {
-        //     var error = new ErrorViewModel("C-19C - Can not delete this Customer.");
-        //     return RedirectToAction(nameof(Error), error);
-        // }
         catch (Exception exception)
         {
             var error = new ErrorViewModel("C-20C - Internal server error.");

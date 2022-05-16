@@ -21,7 +21,7 @@ public class SellerMap : IEntityTypeConfiguration<Seller>
             .IsRequired();
         
         builder.OwnsOne(x => x.Name)
-            .Property(x => x.CompleteName)
+            .Property(x => x.FullName)
             .HasColumnName("CompleteName")
             .HasMaxLength(180)
             .IsRequired();

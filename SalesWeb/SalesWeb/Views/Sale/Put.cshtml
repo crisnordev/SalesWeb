@@ -40,17 +40,18 @@
         <thead>
         <tr class="success">
             <th>
-                @Html.DisplayNameFor(model => model.SoldProducts[0].ProductId)
+                @Html.DisplayName("Product Id")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SoldProducts[0].ProductName)
+                @Html.DisplayName("Name")
             </th>
             <th>
-            @Html.DisplayNameFor(model => model.SoldProducts[0].Quantity)
+            @Html.DisplayName("Quantity")
 
             <th>
-                @Html.DisplayNameFor(model => model.SoldProducts[0].Price)
+                @Html.DisplayName("Price")
             </th>
+            <th></th>
         </tr>
         </thead>
         @foreach (var item in Model.SoldProducts)
@@ -67,6 +68,11 @@
             </td>
             <td>
                 @Html.DisplayFor(model => item.Price)
+            </td>
+            <td>
+                @*<a asp-action="Put" asp-route-id="@item.ProductId">Edit</a>    this will be calling product quantity individual edit *@
+                @*<a asp-action="Put" asp-route-id="@item.ProductId">Delete</a>   this will be calling product individual delete*@
+                <a asp-controller="Product" asp-action="Post" asp-route-id="@item.ProductId">Edit Product</a>
             </td>
             </tbody>
         }
@@ -94,17 +100,15 @@
                 <span asp-validation-for="ProductQuantity" class="text-danger"></span>
             </div>
         </td>
+        <td>
+            <div>
+                <input type="hidden" asp-for="SaleId"/>
+                <input type="submit" value="Add" class="btn btn-primary"/>
+            </div>
+        </td>
         </tbody>
     </table>
-    <div class="form-group">
-        <input type="hidden" asp-for="SaleId"/>
-        <input type="submit" value="CONFIRM PRODUCT" class="btn btn-primary"/>
-    </div>
 </form>
-<br/>
-<div>
-    <a asp-action="GetById" asp-route-id="@Model.SaleId" class="btn btn-primary">Finish Sale</a>
-</div>
 <br>
 <div>
     <a asp-action="Index" class="btn btn-primary">BACK TO LIST</a>

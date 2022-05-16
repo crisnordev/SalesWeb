@@ -5,11 +5,19 @@ namespace SalesWeb.Shared.ValueObjects;
 public class Name : ValueObject
 {
     public Name(){}
+
+    public Name(string name)
+    {
+        FullName = name;
+        SplitName(name);
+        Validate();
+    }
     
     public Name(string firstName, string lastName)
     {
         FirstName = firstName;
         LastName = lastName;
+        FullName = FirstName + " " + LastName;
         Validate();
     }
 
@@ -23,11 +31,11 @@ public class Name : ValueObject
     [DisplayName("Last name")] 
     public string LastName { get; private set; } 
     
-    [DisplayName("Name")] public string CompleteName { get; private set; } 
+    [DisplayName("Name")] public string FullName { get; private set; } 
 
     private void Validate()
     {
-        if (FirstName == null | LastName == null)
+        if (FirstName == null | LastName == null | FullName == null)
             throw new ArgumentNullException(null, "First name can not be null or empty.");
 
         switch (FirstName.Length)
@@ -46,14 +54,25 @@ public class Name : ValueObject
             case >= 120:
                 throw new InvalidNameLengthException("First name must have less than 120 characters.");
         }
-
-        CompleteName = FirstName + " " + LastName;
     }
-    
-    public static implicit operator string(Name name) => name.ToString();
-    
 
-    public static implicit operator Name(string name) => new (name, name);
-    
-    public override string ToString() => CompleteName;
+    public void SplitName(string name)
+    {
+        FirstName = name.Split(" ")[0];
+        foreach (var lastName in name.Split(" ")[..])
+        {
+            LastName += lastName + " ";
+        }
+    }
+
+    public static implicit operator string(Name name) => name.FullName;
+
+    public static implicit operator Name(string name)
+    {
+        var fullName = new Name(name);
+        fullName.SplitName(name);
+        return fullName;
+    }
+
+    public override string ToString() => FullName;
 }

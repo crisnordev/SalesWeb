@@ -17,10 +17,10 @@
             @Html.DisplayNameFor(model => model[0].SaleId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].Customer.Name)
+            @Html.DisplayNameFor(model => model[0].Customer)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].Seller.Name)
+            @Html.DisplayNameFor(model => model[0].Seller)
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].TotalAmount)
@@ -36,18 +36,18 @@
                 @Html.DisplayFor(modelItem => item.SaleId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.Name.CompleteName)
+                @Html.DisplayFor(modelItem => item.Customer)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Seller.Name.CompleteName)
+                @Html.DisplayFor(modelItem => item.Seller)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TotalAmount)
             </td>
             <td>
-                <a asp-action="Put" asp-route-id="@item.SaleId">EDIT</a>
-                <a asp-action="GetById" asp-route-id="@item.SaleId">DETAILS</a>
-                <a asp-action="Delete" asp-route-id="@item.SaleId">DELETE</a>
+                <a asp-action="Put" asp-route-id="@item.SaleId">Edit</a>
+                <a asp-action="GetById" asp-route-id="@item.SaleId">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.SaleId">Delete</a>
             </td>
         </tr>
     }

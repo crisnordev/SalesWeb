@@ -10,8 +10,7 @@ public class SoldProductMap : IEntityTypeConfiguration<SoldProduct>
         
         builder.Property(x => x.ProductId)
             .HasColumnName("ProductId")
-            .HasColumnType("VARCHAR")
-            .HasMaxLength(36)
+            .HasColumnType("SMALLINT")
             .IsRequired();
         
         builder.OwnsOne(x => x.ProductName)

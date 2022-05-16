@@ -124,12 +124,6 @@ public class SellerController : Controller
         }
         
         var seller = await context.Sellers.FirstOrDefaultAsync(x => x.SellerId == id);
-        // if (seller == null)
-        // {
-        //     var error = new ErrorViewModel("C-11SE - Can not find Seller.");
-        //     return RedirectToAction(nameof(Error), error);
-        // }
-
         seller.Name = new Name(model.FirstName, model.LastName);
         if (seller.Email.Address != model.Email)
             seller.Email = new Email(model.Email, true); //confirmed will be false later
@@ -140,13 +134,8 @@ public class SellerController : Controller
             context.Update(seller);
             await context.SaveChangesAsync();
 
-            Ok(seller);
+            View(seller);
             return RedirectToAction(nameof(Index));
-        }
-        catch (DbUpdateException)
-        {
-            var error = new ErrorViewModel("C-12SE - Unable to update this Seller, check data, and try again.");
-            return RedirectToAction(nameof(Error), error);
         }
         catch (Exception exception)
         {
@@ -210,15 +199,10 @@ public class SellerController : Controller
 
         try
         {
-            context.Sellers.Remove(seller!);
+            context.Sellers.Remove(seller);
             await context.SaveChangesAsync();
-            Ok(seller);
+            View(seller);
             return RedirectToAction(nameof(Index));
-        }
-        catch (DbUpdateException)
-        {
-            var error = new ErrorViewModel("C-19SE - Can not delete this Seller.");
-            return RedirectToAction(nameof(Error), error);
         }
         catch (Exception exception)
         {

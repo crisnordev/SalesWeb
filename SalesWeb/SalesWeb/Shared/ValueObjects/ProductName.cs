@@ -10,9 +10,6 @@ public class ProductName
         Validate();
     }
 
-    [Required(ErrorMessage = "Product name is required.")]
-    [StringLength(160, MinimumLength = 2, ErrorMessage = "Product name must have between 2 and 160 characters.")]
-    [DisplayName("Product name")]
     public string ProductFullName { get; private set; } 
 
     private void Validate()

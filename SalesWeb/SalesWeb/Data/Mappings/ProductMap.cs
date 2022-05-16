@@ -10,6 +10,10 @@ public class ProductMap : IEntityTypeConfiguration<Product>
         
         builder.HasKey(x => x.ProductId);
         
+        builder.Property(x => x.ProductId)
+            .ValueGeneratedOnAdd()
+            .UseIdentityColumn();
+        
         builder.OwnsOne(x => x.ProductName)
             .Property(x => x.ProductFullName)
             .HasColumnName("ProductName")

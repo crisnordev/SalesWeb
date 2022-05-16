@@ -4,14 +4,14 @@ public class GetProductViewModel
 {
     public GetProductViewModel(){}
 
-    public GetProductViewModel(Guid productId, string productName, decimal price)
+    public GetProductViewModel(int productId, string productName, decimal price)
     {
         ProductId = productId;
         ProductName = productName;
         Price = price;
     }
 
-    [DisplayName("Product Id")] public Guid ProductId { get; set; }
+    [DisplayName("Product Id")] public int ProductId { get; set; }
     
     [DisplayName("Name")] public string ProductName { get; set; }
     

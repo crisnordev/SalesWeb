@@ -6,9 +6,9 @@ INSERT INTO [Customer] VALUES ('6440cdcd-6c82-4acc-ac96-9535c5300718','José', '
 
 USE [SalesWeb]
 GO
-INSERT INTO [Product] VALUES ('6aa66d6f-a740-4132-b0ea-6c2867f8209e','Copo Descartável', 3.99)
-INSERT INTO [Product] VALUES ('c9523f77-bf4f-46c2-9092-5b4a6a926f89','Sacola Plástica', 2.98)
-INSERT INTO [Product] VALUES ('6769de2f-31ff-468d-8dba-deadb8d9f8ce','Saco de Lixo', 32.50)
+INSERT INTO [Product] VALUES ('Copo Descartável', 3.99)
+INSERT INTO [Product] VALUES ('Sacola Plástica', 2.98)
+INSERT INTO [Product] VALUES ('Saco de Lixo', 32.50)
 
 USE [SalesWeb]
 GO
@@ -24,9 +24,9 @@ INSERT INTO [Sale] VALUES ('0d17eb4b-7cca-4fc6-9e0d-647cdf4f02ae', '6440cdcd-6c8
 
 USE [SalesWeb]
 GO
-INSERT INTO [SoldProduct] VALUES ('53cfea94-17ac-42ff-a277-49fd0fc9c463', '6aa66d6f-a740-4132-b0ea-6c2867f8209e', 'Copo Descartável', 1, 3.99)
-INSERT INTO [SoldProduct] VALUES ('f0824f0a-0c25-43bd-ba28-93c277f7b721', 'c9523f77-bf4f-46c2-9092-5b4a6a926f89', 'Sacola Plástica', 1, 2.98)
-INSERT INTO [SoldProduct] VALUES ('c80354e7-c4f7-4554-85c4-7665698d2ca3', '6769de2f-31ff-468d-8dba-deadb8d9f8ce', 'Saco de Lixo', 2, 32.50)
+INSERT INTO [SoldProduct] VALUES ('53cfea94-17ac-42ff-a277-49fd0fc9c463', 1, 'Copo Descartável', 1, 3.99)
+INSERT INTO [SoldProduct] VALUES ('f0824f0a-0c25-43bd-ba28-93c277f7b721', 2, 'Sacola Plástica', 1, 2.98)
+INSERT INTO [SoldProduct] VALUES ('c80354e7-c4f7-4554-85c4-7665698d2ca3', 3, 'Saco de Lixo', 2, 32.50)
 
 USE [SalesWeb]
 GO

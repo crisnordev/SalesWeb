@@ -21,8 +21,8 @@ public class CustomerMap : IEntityTypeConfiguration<Customer>
             .IsRequired();
         
         builder.OwnsOne(x => x.Name)
-            .Property(x => x.CompleteName)
-            .HasColumnName("CompleteName")
+            .Property(x => x.FullName)
+            .HasColumnName("FullName")
             .HasMaxLength(180)
             .IsRequired();
         
