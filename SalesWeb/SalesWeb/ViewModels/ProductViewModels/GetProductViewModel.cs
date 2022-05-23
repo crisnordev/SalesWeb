@@ -15,7 +15,10 @@ public class GetProductViewModel
     
     [DisplayName("Name")] public string ProductName { get; set; }
     
-    [DisplayName("Price")] public decimal Price { get; set; }
+    [Column(TypeName = "decimal(18, 2)")]
+    [DataType(DataType.Currency)]
+    [DisplayName("Price")]
+    public decimal Price { get; set; }
 
     public static implicit operator GetProductViewModel(Product product)
     {

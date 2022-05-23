@@ -6,9 +6,9 @@ public class GetCustomerViewModel
     
     [DisplayName("Customer Id")] public Guid CustomerId { get; set; }
 
-    [DisplayName("Customer name")] public Name Name { get; set; } 
+    [DisplayName("Customer name")] public string Name { get; set; } 
     
-    [DisplayName("E-mail")] public Email Email { get; set; }
+    [DisplayName("E-mail")] public string Email { get; set; }
     
     [DisplayName("Document Id")] public DocumentIdentificationNumber DocumentIdentificationNumber { get; set; }
     

@@ -27,7 +27,6 @@ public class CustomerController : Controller
             var error = new ErrorViewModel("C-02C - Customer Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
-
         try
         {
             return View(await new GetByIdCustomerService().GetById(context, id));

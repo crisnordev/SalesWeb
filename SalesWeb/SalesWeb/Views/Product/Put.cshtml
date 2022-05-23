@@ -6,15 +6,25 @@
 <hr/>
 <h4>EDIT PRODUCT</h4>
 <hr/>
+<table class="table table-striped table-hover">
+    <thead>
+    <tr class="success">
+        <th>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <td>
+        @Html.DisplayFor(model => model.ProductId)
+    </td>
+    </tbody>
+</table>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Put">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ProductId" class="control-label"></label>
-                <input asp-for="ProductId" class="form-control"/>
-                <span asp-validation-for="ProductId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="ProductName" class="control-label"></label>
                 <input asp-for="ProductName" class="form-control"/>

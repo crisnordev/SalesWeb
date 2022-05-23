@@ -29,7 +29,8 @@ public class ProductController : Controller
 
         try
         {
-            return View(await new GetByIdProductService().GetById(context, id));
+            View(await new GetByIdProductService().GetById(context, id));
+            return RedirectToAction(nameof(Index));
         }
         catch
         {
@@ -45,7 +46,7 @@ public class ProductController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, PostPutProductViewModel model)
+    public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, PostProductViewModel model)
     {
         if (!ModelState.IsValid)
         {

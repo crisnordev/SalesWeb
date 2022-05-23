@@ -4,7 +4,7 @@ public class GetSellerViewModel
 {
     public GetSellerViewModel(){}
 
-    public GetSellerViewModel(Guid sellerId, Name name, Email email, DocumentIdentificationNumber documentIdentificationNumber, 
+    public GetSellerViewModel(Guid sellerId, string name, string email, string documentIdentificationNumber, 
         string password, DateTime birthDate)
     {
         SellerId = sellerId;
@@ -17,11 +17,11 @@ public class GetSellerViewModel
 
     [DisplayName("Seller Id")] public Guid SellerId { get; set; } 
 
-    [DisplayName("Name")] public Name Name { get; set; }
+    [DisplayName("Name")] public string Name { get; set; }
 
-    [DisplayName("E-mail")] public Email Email { get; set; } 
+    [DisplayName("E-mail")] public string Email { get; set; } 
     
-    [DisplayName("Document Id")] public DocumentIdentificationNumber DocumentIdentificationNumber { get; set; } 
+    [DisplayName("Document Id")] public string DocumentIdentificationNumber { get; set; } 
 
     [DisplayName("Password")] public string Password { get; set; } 
     
@@ -35,7 +35,7 @@ public class GetSellerViewModel
         var getSeller = new GetSellerViewModel
         {
             SellerId = seller.SellerId,
-            Name = seller.Name,
+            Name = seller.Name.ToString(),
             Email = seller.Email,
             DocumentIdentificationNumber = seller.DocumentIdentificationNumber,
             BirthDate = seller.BirthDate

@@ -1,3 +1,4 @@
+using SalesWeb.Services.SellerServices;
 using SalesWeb.ViewModels.SellerViewModels;
 
 namespace SalesWeb.Controllers;
@@ -9,10 +10,7 @@ public class SellerController : Controller
     {
         try
         {
-            var sellersContext = await context.Sellers.AsNoTracking().ToListAsync();
-            var sellers = sellersContext.Select(customer => (GetSellerViewModel) customer).ToList();
-            
-            return View(sellers);
+            return View(await new GetSellerService().Get(context));
         }
         catch (Exception exception)
         {
@@ -29,25 +27,9 @@ public class SellerController : Controller
             var error = new ErrorViewModel("C-02SE - Seller Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
-
         try
         {
-            var sellerContext = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.SellerId == id);
-            if (sellerContext == null)
-            {
-                var error = new ErrorViewModel("C-03SE - Can not find Seller.");
-                return RedirectToAction(nameof(Error), error);
-            }
-            var seller = new GetSellerViewModel
-            {
-                SellerId = sellerContext.SellerId,
-                Name = sellerContext.Name,
-                Email = sellerContext.Email,
-                DocumentIdentificationNumber = sellerContext.DocumentIdentificationNumber,
-                Password = sellerContext.Password,
-                BirthDate = sellerContext.BirthDate
-            };
-            return View(seller);
+            return View(await new GetByIdSellerService().GetById(context, id));
         }
         catch (Exception exception)
         {
@@ -71,17 +53,9 @@ public class SellerController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-05SE - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
-
-        var seller = new Seller(Guid.NewGuid(), new Name(model.FirstName, model.LastName),
-            new Email(model.Email, true), //confirmed will be false later
-            new DocumentIdentificationNumber(model.DocumentIdentificationNumber), model.Password, model.BirthDate);
-
         try
         {
-            context.Add(seller);
-            await context.SaveChangesAsync();
-
-            View(model);
+            View(await new PostSellerService().Post(context, model));
             return RedirectToAction(nameof(Index));
         }
         catch (Exception exception)
@@ -99,11 +73,9 @@ public class SellerController : Controller
             var error = new ErrorViewModel("C-08SE - Seller Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
-
         try
         {
-            PutSellerViewModel seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.SellerId == id);
-            return View(seller);
+            return View(await new PutSellerService().GetById(context, id));
         }
         catch (Exception exception)
         {
@@ -122,19 +94,9 @@ public class SellerController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-10SE - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
-        
-        var seller = await context.Sellers.FirstOrDefaultAsync(x => x.SellerId == id);
-        seller.Name = new Name(model.FirstName, model.LastName);
-        if (seller.Email.Address != model.Email)
-            seller.Email = new Email(model.Email, true); //confirmed will be false later
-        seller.Password = model.Password;
-
         try
         {
-            context.Update(seller);
-            await context.SaveChangesAsync();
-
-            View(seller);
+            View(await new PutSellerService().Put(context, id, model));
             return RedirectToAction(nameof(Index));
         }
         catch (Exception exception)
@@ -152,25 +114,9 @@ public class SellerController : Controller
             var error = new ErrorViewModel("C-14SE - Seller Identification can not be null.");
             return RedirectToAction(nameof(Error), error);
         }
-
         try
         {
-            var sellerContext = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.SellerId == id);
-            if (sellerContext == null)
-            {
-                var error = new ErrorViewModel("C-03SE - Can not find Seller.");
-                return RedirectToAction(nameof(Error), error);
-            }
-            var seller = new GetSellerViewModel
-            {
-                SellerId = sellerContext.SellerId,
-                Name = sellerContext.Name,
-                Email = sellerContext.Email,
-                DocumentIdentificationNumber = sellerContext.DocumentIdentificationNumber,
-                Password = sellerContext.Password,
-                BirthDate = sellerContext.BirthDate
-            };
-            return View(seller);
+            return View(await new DeleteSellerService().GetById(context, id));
         }
         catch (Exception exception)
         {
@@ -189,19 +135,9 @@ public class SellerController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-17SE - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
-
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.SellerId == id);
-        if (seller == null)
-        {
-            var error = new ErrorViewModel("C-18SE - Can not find Seller.");
-            return RedirectToAction(nameof(Error), error);
-        }
-
         try
         {
-            context.Sellers.Remove(seller);
-            await context.SaveChangesAsync();
-            View(seller);
+            View(await new DeleteSellerService().Delete(context, id));
             return RedirectToAction(nameof(Index));
         }
         catch (Exception exception)

@@ -4,7 +4,7 @@ namespace SalesWeb.Services.ProductServices;
 
 public class PostProductService
 {
-    public async Task<PostPutProductViewModel> Post([FromServices] SalesWebDbContext context, PostPutProductViewModel model)
+    public async Task<PostProductViewModel> Post([FromServices] SalesWebDbContext context, PostProductViewModel model)
     {
         var product = new Product(0, new ProductName(model.ProductName), model.Price);
        context.Add(product);

@@ -13,7 +13,7 @@ public class SaleController : Controller
                 .Include(x => x.Customer)
                 .ToListAsync();
             var sales = salesContext.Select(item => new GetSaleViewModel(
-                item.SaleId, item.Customer.Name.FullName, item.Seller.Name.FullName, item.TotalAmount))
+                item.SaleId, item.Customer.Name.ToString(), item.Seller.Name.ToString(), item.TotalAmount))
                 .ToList();
             
             return View(sales);
@@ -41,7 +41,7 @@ public class SaleController : Controller
             if (saleContext == null)
                 return RedirectToAction(nameof(Error), new ErrorViewModel("C-03SA - Can not find Sale."));
             
-            var sale = new GetSaleViewModel(saleContext.SaleId, saleContext.Customer.Name.FullName, saleContext.Seller.Name.FullName,
+            var sale = new GetSaleViewModel(saleContext.SaleId, saleContext.Customer.Name.ToString(), saleContext.Seller.Name.ToString(),
                 saleContext.TotalAmount);
             foreach (var item in saleContext.SoldProducts)
                 sale.SoldProducts.Add(new SoldProduct(item.SoldProductId, item.ProductId, new ProductName(item.ProductName.ProductFullName),
@@ -129,7 +129,7 @@ public class SaleController : Controller
                 .Include(x => x.SoldProducts)
                 .FirstOrDefaultAsync(x => x.SaleId == id);
 
-            var putSaleViewModel = new PutSaleViewModel(sale.SaleId,sale.Customer.Name.FullName, sale.Seller.Name.FullName, 0,
+            var putSaleViewModel = new PutSaleViewModel(sale.SaleId,sale.Customer.Name.ToString(), sale.Seller.Name.ToString(), 0,
                 0, sale.TotalAmount);
             putSaleViewModel.SoldProducts = (IReadOnlyCollection<SoldProduct>)sale.SoldProducts;
 
@@ -198,7 +198,7 @@ public class SaleController : Controller
         if (saleContext == null)
             return RedirectToAction(nameof(Error), new ErrorViewModel("C-22SA - Can not find Sale."));
             
-        var sale = new PutSaleViewModel(saleContext.SaleId, saleContext.Customer.Name.FullName, saleContext.Seller.Name.FullName,
+        var sale = new PutSaleViewModel(saleContext.SaleId, saleContext.Customer.Name.ToString(), saleContext.Seller.Name.ToString(),
             0, 0, saleContext.TotalAmount);
         return View(sale);
     }

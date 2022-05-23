@@ -19,12 +19,6 @@ public class SellerMap : IEntityTypeConfiguration<Seller>
             .HasColumnName("LastName")
             .HasMaxLength(120)
             .IsRequired();
-        
-        builder.OwnsOne(x => x.Name)
-            .Property(x => x.FullName)
-            .HasColumnName("CompleteName")
-            .HasMaxLength(180)
-            .IsRequired();
 
         builder.OwnsOne(x => x.Email)
             .Property(x => x.Address)

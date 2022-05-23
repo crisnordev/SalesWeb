@@ -20,12 +20,6 @@ public class CustomerMap : IEntityTypeConfiguration<Customer>
             .HasMaxLength(120)
             .IsRequired();
         
-        builder.OwnsOne(x => x.Name)
-            .Property(x => x.FullName)
-            .HasColumnName("FullName")
-            .HasMaxLength(180)
-            .IsRequired();
-        
         builder.OwnsOne(x => x.Email)
             .Property(x => x.Address)
             .HasColumnName("Email")

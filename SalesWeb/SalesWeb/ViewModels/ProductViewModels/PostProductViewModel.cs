@@ -1,10 +1,10 @@
 namespace SalesWeb.ViewModels.ProductViewModels;
 
-public class PostPutProductViewModel
+public class PostProductViewModel
 {
-    public PostPutProductViewModel(){}
-
-    public PostPutProductViewModel(string productName, decimal price)
+    public PostProductViewModel(){}
+    
+    public PostProductViewModel(string productName, decimal price)
     {
         ProductName = productName;
         Price = price;
@@ -20,14 +20,4 @@ public class PostPutProductViewModel
     [DataType(DataType.Currency)]
     [DisplayName("Price")]
     public decimal Price { get; set; }
-
-    public static implicit operator PostPutProductViewModel(Product product)
-    {
-        var postProduct = new PostPutProductViewModel
-        {
-            ProductName = product.ProductName,
-            Price = product.Price
-        };
-        return postProduct;
-    }
 }
