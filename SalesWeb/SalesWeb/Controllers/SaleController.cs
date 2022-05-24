@@ -63,7 +63,7 @@ public class SaleController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-06SA - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
-
+        
         try
         {
             View(await new PostSaleService().Post(context, model));
@@ -120,7 +120,7 @@ public class SaleController : Controller
     {
         if (id == null)
             return RedirectToAction(nameof(Error), new ErrorViewModel("C-21SA - Sale Identification can not be null."));
-        
+
         try
         {
             return View(await new DeleteSaleService().GetById(context, id));

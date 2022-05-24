@@ -45,6 +45,7 @@ public class Name : ValueObject
                 throw new InvalidNameLengthException("First name must have less than 120 characters.");
         }
     }
+    
     public static implicit operator string(Name name) => name.ToString();
 
     public static implicit operator Name(string name) 

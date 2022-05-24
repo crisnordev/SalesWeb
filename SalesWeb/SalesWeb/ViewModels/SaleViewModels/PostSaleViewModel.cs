@@ -25,5 +25,4 @@ public class PostSaleViewModel
     [DisplayName("Total")] 
     [DataType(DataType.Currency)]
     public decimal TotalAmount { get; set; }
-
 }

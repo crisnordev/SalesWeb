@@ -30,10 +30,10 @@
         @Html.DisplayFor(model => model.CustomerId)
     </td>
     <td>
-        @Html.DisplayFor(model => model.Name)
+        @Html.DisplayFor(model => model.Name.FullName)
     </td>
     <td>
-        @Html.DisplayFor(model => model.Email)
+        @Html.DisplayFor(model => model.Email.Address)
     </td>
     <td>
         @Html.DisplayFor(model => model.DocumentIdentificationNumber.Number)

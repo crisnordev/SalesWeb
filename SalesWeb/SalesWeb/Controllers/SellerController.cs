@@ -53,6 +53,7 @@ public class SellerController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-05SE - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
+        
         try
         {
             View(await new PostSellerService().Post(context, model));
@@ -135,6 +136,7 @@ public class SellerController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-17SE - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
+        
         try
         {
             View(await new DeleteSellerService().Delete(context, id));
