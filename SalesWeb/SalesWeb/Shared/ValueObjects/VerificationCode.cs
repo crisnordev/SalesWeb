@@ -1,5 +1,3 @@
-using SalesWeb.Shared.Exceptions;
-
 namespace SalesWeb.Shared.ValueObjects;
 
 public class VerificationCode : ValueObject

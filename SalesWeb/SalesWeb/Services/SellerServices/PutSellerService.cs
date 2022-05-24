@@ -1,6 +1,3 @@
-using SalesWeb.ViewModels.ProductViewModels;
-using SalesWeb.ViewModels.SellerViewModels;
-
 namespace SalesWeb.Services.SellerServices;
 
 public class PutSellerService

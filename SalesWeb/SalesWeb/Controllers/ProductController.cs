@@ -1,6 +1,3 @@
-using SalesWeb.Services.ProductServices;
-using SalesWeb.ViewModels.ProductViewModels;
-
 namespace SalesWeb.Controllers;
 
 [Controller]

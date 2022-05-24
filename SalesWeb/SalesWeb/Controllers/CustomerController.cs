@@ -1,6 +1,3 @@
-using SalesWeb.Services.CustomerServices;
-using SalesWeb.ViewModels.CustomerViewModels;
-
 namespace SalesWeb.Controllers;
 
 [Controller]

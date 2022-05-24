@@ -1,5 +1,3 @@
-using SalesWeb.ViewModels.ProductViewModels;
-
 namespace SalesWeb.Services.ProductServices;
 
 public class GetByIdProductService

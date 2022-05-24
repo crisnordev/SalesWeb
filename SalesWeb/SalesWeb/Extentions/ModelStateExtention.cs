@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace SalesWeb.Extentions;
 
-public static class ModelStateExtension
+public static class ModelStateExtention 
 {
     public static List<string> GetErrors(this ModelStateDictionary modelState, string errorMessage)
     {

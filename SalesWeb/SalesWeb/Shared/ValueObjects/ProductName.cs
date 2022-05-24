@@ -1,8 +1,6 @@
-using SalesWeb.Shared.Exceptions;
-
 namespace SalesWeb.Shared.ValueObjects;
 
-public class ProductName
+public class ProductName : ValueObject
 {
     public ProductName(string productFullName)
     {

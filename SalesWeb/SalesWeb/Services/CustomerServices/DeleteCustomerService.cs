@@ -1,5 +1,3 @@
-using SalesWeb.ViewModels.CustomerViewModels;
-
 namespace SalesWeb.Services.CustomerServices;
 
 public class DeleteCustomerService

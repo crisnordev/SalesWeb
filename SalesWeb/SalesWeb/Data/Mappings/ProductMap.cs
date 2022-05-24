@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
 namespace SalesWeb.Data.Mappings;
 
 public class ProductMap : IEntityTypeConfiguration<Product>

@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Mvc.Rendering;
-using SalesWeb.Services.SaleServices;
-
 namespace SalesWeb.Controllers;
 
 [Controller]
