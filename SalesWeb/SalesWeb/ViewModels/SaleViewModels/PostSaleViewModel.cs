@@ -12,7 +12,8 @@ public class PostSaleViewModel
         ProductQuantity = productQuantity;
         TotalAmount = totalAmount;
     }
-    
+
+    public Guid Id { get; set; }
     [DisplayName("Customer")] public Guid CustomerId { get; set; }
 
     [DisplayName("Seller")] public Guid SellerId { get; set; }

@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SalesWeb.Services.SaleServices;
+
 namespace SalesWeb.Controllers;
 
 [Controller]
@@ -8,15 +10,7 @@ public class SaleController : Controller
     {
         try
         {
-            var salesContext = await context.Sales.AsNoTracking()
-                .Include(x => x.Seller)
-                .Include(x => x.Customer)
-                .ToListAsync();
-            var sales = salesContext.Select(item => new GetSaleViewModel(
-                item.SaleId, item.Customer.Name.ToString(), item.Seller.Name.ToString(), item.TotalAmount))
-                .ToList();
-            
-            return View(sales);
+            return View(await new GetSaleService().Get(context));
         }
         catch(Exception ex)
         {
@@ -33,21 +27,7 @@ public class SaleController : Controller
 
         try
         {
-            var saleContext = await context.Sales.AsNoTracking()
-                .Include(x => x.Seller)
-                .Include(x => x.Customer)
-                .Include(x => x.SoldProducts)
-                .FirstOrDefaultAsync(x => x.SaleId == id);
-            if (saleContext == null)
-                return RedirectToAction(nameof(Error), new ErrorViewModel("C-03SA - Can not find Sale."));
-            
-            var sale = new GetSaleViewModel(saleContext.SaleId, saleContext.Customer.Name.ToString(), saleContext.Seller.Name.ToString(),
-                saleContext.TotalAmount);
-            foreach (var item in saleContext.SoldProducts)
-                sale.SoldProducts.Add(new SoldProduct(item.SoldProductId, item.ProductId, new ProductName(item.ProductName.ProductFullName),
-                    item.Quantity, item.Price));
-
-            return View(sale);
+            return View(await new GetByIdSaleService().GetById(context, id));
         }
         catch(Exception ex)
         {
@@ -84,32 +64,10 @@ public class SaleController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var customer = await context.Customers.FirstOrDefaultAsync(x => x.CustomerId == model.CustomerId);
-        var seller = await context.Sellers.FirstOrDefaultAsync(x => x.SellerId == model.SellerId);
-        var product = await context.Products.FirstOrDefaultAsync(x => x.ProductId == model.ProductId);
-
-        var sale = new Sale
-        {
-            SaleId = Guid.NewGuid(),
-            Customer = customer,
-            Seller = seller,
-            TotalAmount = model.ProductQuantity * product.Price
-        };
-
-        sale.SoldProducts = new List<SoldProduct>
-        {
-            new(Guid.NewGuid(), product.ProductId, new ProductName(product.ProductName.ProductFullName),
-                model.ProductQuantity, product.Price)
-        };
-
         try
         {
-            await context.SoldProducts.AddRangeAsync(sale.SoldProducts);
-            await context.Sales.AddAsync(sale);
-            await context.SaveChangesAsync();
-
-            View(model);
-            return RedirectToAction(nameof(GetById), new {id = sale.SaleId});
+            View(await new PostSaleService().Post(context, model));
+            return RedirectToAction(nameof(GetById), new {id = model.Id});
         }
         catch (Exception ex)
         {
@@ -123,19 +81,9 @@ public class SaleController : Controller
     {
         try
         {
-            var sale = await context.Sales.AsNoTracking()
-                .Include(x => x.Seller)
-                .Include(x => x.Customer)
-                .Include(x => x.SoldProducts)
-                .FirstOrDefaultAsync(x => x.SaleId == id);
-
-            var putSaleViewModel = new PutSaleViewModel(sale.SaleId,sale.Customer.Name.ToString(), sale.Seller.Name.ToString(), 0,
-                0, sale.TotalAmount);
-            putSaleViewModel.SoldProducts = (IReadOnlyCollection<SoldProduct>)sale.SoldProducts;
-
             ViewData["ProductId"] = new SelectList(context.Products, "ProductId", "ProductName");
             
-            return View(putSaleViewModel);
+            return View(await new PutSaleService().GetById(context, id));
         }
         catch(Exception ex)
         {
@@ -155,27 +103,9 @@ public class SaleController : Controller
             return RedirectToAction(nameof(Error), error);
         }
         
-        var sale = await context.Sales
-            .Include(x => x.Seller)
-            .Include(x => x.Customer)
-            .Include(x => x.SoldProducts)
-            .FirstOrDefaultAsync(x => x.SaleId == id);
-        
-        var product = await context.Products.FirstOrDefaultAsync(x => x.ProductId == model.ProductId);
-        
-        var soldProduct = new SoldProduct(Guid.NewGuid(), product.ProductId, new ProductName(
-            product.ProductName.ProductFullName), model.ProductQuantity, product.Price);
-
-        sale.TotalAmount += model.ProductQuantity * product.Price;
-        sale.SoldProducts.Add(soldProduct);
-
         try
         {
-            await context.SoldProducts.AddAsync(soldProduct);
-            context.Sales.Update(sale);
-            await context.SaveChangesAsync();
-
-            View(model);
+            View(await new PutSaleService().Put(context, id, model));
             return RedirectToAction(nameof(GetById), new { id });
         }
         catch (Exception ex)
@@ -190,17 +120,17 @@ public class SaleController : Controller
     {
         if (id == null)
             return RedirectToAction(nameof(Error), new ErrorViewModel("C-21SA - Sale Identification can not be null."));
-
-        var saleContext = await context.Sales.AsNoTracking()
-            .Include(x => x.Seller)
-            .Include(x => x.Customer)
-            .FirstOrDefaultAsync(x => x.SaleId == id);
-        if (saleContext == null)
-            return RedirectToAction(nameof(Error), new ErrorViewModel("C-22SA - Can not find Sale."));
-            
-        var sale = new PutSaleViewModel(saleContext.SaleId, saleContext.Customer.Name.ToString(), saleContext.Seller.Name.ToString(),
-            0, 0, saleContext.TotalAmount);
-        return View(sale);
+        
+        try
+        {
+            return View(await new DeleteSaleService().GetById(context, id));
+        }
+        catch (Exception exception)
+        {
+            var error = new ErrorViewModel("C-21SA - Internal server error.");
+            error.Errors.Add(exception.Message);
+            return RedirectToAction(nameof(Error), error);
+        }
     }
 
     [HttpPost, ActionName("Delete")]
@@ -212,18 +142,10 @@ public class SaleController : Controller
             var error = new ErrorViewModel(ModelState.GetErrors("C-23SA - Can not validate this model."));
             return RedirectToAction(nameof(Error), error);
         }
-
-        var sale = await context.Sales.AsNoTracking()
-            .Include(x => x.Seller)
-            .Include(x => x.Customer)
-            .Include(x => x.SoldProducts)
-            .FirstOrDefaultAsync(x => x.SaleId == id);
         
         try
         {
-            context.Sales.Remove(sale);
-            await context.SaveChangesAsync();
-            View();
+            View(await new DeleteSaleService().Delete(context, id));
             return RedirectToAction(nameof(Index));
         }
         catch (Exception ex)
