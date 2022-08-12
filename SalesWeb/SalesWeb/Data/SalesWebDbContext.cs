@@ -2,6 +2,8 @@ namespace SalesWeb.Data;
 
 public class SalesWebDbContext : DbContext
 {
+    public SalesWebDbContext (DbContextOptions<SalesWebDbContext> options) : base(options) { }
+    
     public DbSet<Seller> Sellers { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Customer> Customers { get; set; }

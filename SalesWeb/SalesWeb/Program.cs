@@ -1,6 +1,10 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<SalesWebDbContext>();
+builder.Services.AddDbContext<SalesWebDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? 
+                         throw new InvalidOperationException(
+                             "Connection string 'SalesWebDbContext' not found.")));
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
