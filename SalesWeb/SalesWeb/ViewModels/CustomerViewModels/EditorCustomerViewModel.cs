@@ -4,8 +4,13 @@ public class EditorCustomerViewModel
 {
     [Required(ErrorMessage = "This field is required.")]
     [StringLength(80, MinimumLength = 8, ErrorMessage = "This field must have between 8 and 80 characters.")]
-    [DisplayName("NAME")]
-    public string Name { get; set; }
+    [DisplayName("FIRST NAME")]
+    public string FirstName { get; set; }
+    
+    [Required(ErrorMessage = "This field is required.")]
+    [StringLength(160, MinimumLength = 8, ErrorMessage = "This field must have between 8 and 160 characters.")]
+    [DisplayName("LAST NAME")]
+    public string LastName { get; set; }
     
     [Required(ErrorMessage = "This field is required.")]
     [EmailAddress(ErrorMessage = "This e-mail is invalid.")]
@@ -29,7 +34,8 @@ public class EditorCustomerViewModel
     {
         var editorCustomer = new EditorCustomerViewModel
         {
-            Name = customer.Name,
+            FirstName = customer.FirstName,
+            LastName = customer.LastName,
             Email = customer.Email,
             DocumentId = customer.DocumentId,
             BirthDate = customer.BirthDate

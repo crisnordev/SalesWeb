@@ -4,7 +4,9 @@ public class GetCustomerViewModel
 {
     [DisplayName("CUSTOMER IDENTIFICATION")] public Guid Id { get; set; }
 
-    [DisplayName("NAME")] public string Name { get; set; }
+    [DisplayName("FIRST NAME")] public string FirstName { get; set; }
+    
+    [DisplayName("LAST NAME")] public string LastName { get; set; }
     
     [DisplayName("E-MAIL")] public string Email { get; set; }
     
@@ -20,7 +22,8 @@ public class GetCustomerViewModel
         var getCustomer = new GetCustomerViewModel
         {
             Id = customer.Id,
-            Name = customer.Name,
+            FirstName = customer.FirstName,
+            LastName = customer.LastName,
             Email = customer.Email,
             DocumentId = customer.DocumentId,
             BirthDate = customer.BirthDate

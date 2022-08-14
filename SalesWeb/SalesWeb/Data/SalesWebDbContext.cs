@@ -9,12 +9,7 @@ public class SalesWebDbContext : DbContext
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Sale> Sales { get; set; }
     public DbSet<SoldProduct> SoldProducts { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-    {
-        options.UseSqlServer("Server=localhost,1433;Database=SalesWeb;User ID=sa;Password=1q2w3e4r@#$");
-    }
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new SellerMap());

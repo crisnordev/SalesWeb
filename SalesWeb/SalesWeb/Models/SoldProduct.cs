@@ -2,11 +2,11 @@ namespace SalesWeb.Models;
 
 public class SoldProduct
 {
-    public Guid Id { get; set; }
-    
-    [DisplayName("PRODUCT IDENTIFICATION")] public string ProductId { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
-    [DisplayName("NAME")] public string Name { get; set; }
+    [DisplayName("PRODUCT IDENTIFICATION")] public string ProductId { get; set; } = string.Empty;
+
+    [DisplayName("NAME")] public string Name { get; set; } = string.Empty;
     
     [DisplayName("QUANTITY")] public int Quantity { get; set; }
 

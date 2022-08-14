@@ -62,7 +62,8 @@ public class SellerController : Controller
         var seller = new Seller
         {
             Id = Guid.NewGuid(),
-            Name = model.Name,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
             Email = model.Email,
             DocumentId = model.DocumentId,
             Password = model.Password,
@@ -127,7 +128,8 @@ public class SellerController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        seller.Name = model.Name;
+        seller.FirstName = model.FirstName;
+        seller.LastName = model.LastName;
         seller.Email = model.Email;
         seller.DocumentId = model.DocumentId;
         seller.Password = model.Password;

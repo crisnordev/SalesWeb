@@ -2,7 +2,12 @@ namespace SalesWeb.Models;
 
 public class Sale
 {
-    public Guid Id { get; set; }
+    public Sale()
+    {
+        SoldProducts = new List<SoldProduct>();
+    }
+    
+    public Guid Id { get; set; } = Guid.NewGuid();
     
     public Customer Customer { get; set; }
     

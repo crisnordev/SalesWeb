@@ -22,7 +22,7 @@ public class GetSellerViewModel
         var getSeller = new GetSellerViewModel
         {
             Id = seller.Id,
-            Name = seller.Name,
+            Name = seller.FirstName + " " + seller.LastName,
             Email = seller.Email,
             DocumentId = seller.DocumentId,
             Password = seller.Password,

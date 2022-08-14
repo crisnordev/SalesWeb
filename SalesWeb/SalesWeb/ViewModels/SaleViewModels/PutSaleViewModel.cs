@@ -25,9 +25,9 @@ public class PutSaleViewModel
         {
             Id = sale.Id,
             CustomerId = sale.Customer.Id,
-            CustomerName = sale.Customer.Name,
+            CustomerName = sale.Customer.FirstName + " " + sale.Customer.LastName,
             SellerId = sale.Seller.Id,
-            SellerName = sale.Seller.Name,
+            SellerName = sale.Seller.FirstName + " " + sale.Seller.LastName,
             TotalAmount = sale.TotalAmount,
             SoldProducts = sale.SoldProducts,
             ProductId = new Guid(),

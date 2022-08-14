@@ -62,7 +62,8 @@ public class CustomerController : Controller
         var customer = new Customer
         {
             Id = Guid.NewGuid(),
-            Name = model.Name,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
             Email = model.Email,
             DocumentId = model.DocumentId,
             BirthDate = model.BirthDate
@@ -126,7 +127,8 @@ public class CustomerController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        customer.Name = model.Name;
+        customer.FirstName = model.FirstName;
+        customer.LastName = model.LastName;
         customer.Email = model.Email;
         customer.DocumentId = model.DocumentId;
         customer.BirthDate = model.BirthDate;

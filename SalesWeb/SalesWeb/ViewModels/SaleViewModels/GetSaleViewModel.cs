@@ -17,8 +17,8 @@ public class GetSaleViewModel
         var getSale = new GetSaleViewModel
         {
             Id = sale.Id,
-            CustomerName = sale.Customer.Name,
-            SellerName = sale.Seller.Name,
+            CustomerName = sale.Customer.FirstName + " " + sale.Customer.LastName,
+            SellerName = sale.Seller.FirstName + " " + sale.Seller.LastName,
             TotalAmount = sale.TotalAmount,
             SoldProducts = sale.SoldProducts
         };
