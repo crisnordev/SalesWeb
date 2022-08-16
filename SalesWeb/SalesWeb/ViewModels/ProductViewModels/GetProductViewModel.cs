@@ -2,7 +2,7 @@ namespace SalesWeb.ViewModels.ProductViewModels;
 
 public class GetProductViewModel
 {
-    [DisplayName("PRODUCT IDENTIFICATION")] public Guid Id { get; set; }
+    [DisplayName("PRODUCT IDENTIFICATION")] public Guid ProductId { get; set; }
     
     [DisplayName("NAME")] public string Name { get; set; }
     
@@ -12,7 +12,7 @@ public class GetProductViewModel
     {
         var getProduct = new GetProductViewModel
         {
-            Id = product.Id,
+            ProductId = product.ProductId,
             Name = product.Name,
             Price = product.Price
         };

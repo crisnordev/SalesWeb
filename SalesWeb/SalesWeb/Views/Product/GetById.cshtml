@@ -8,7 +8,7 @@
     <thead>
     <tr class="success">
         <th>
-            @Html.DisplayNameFor(model => model.Id)
+            @Html.DisplayNameFor(model => model.ProductId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -21,7 +21,7 @@
     </thead>
     <tbody>
     <td>
-        @Html.DisplayFor(model => model.Id)
+        @Html.DisplayFor(model => model.ProductId)
     </td>
     <td>
         @Html.DisplayFor(model => model.Name)
@@ -32,7 +32,7 @@
     </tbody>
 </table>
 <div>
-    <a asp-action="Put" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Put" asp-route-id="@Model?.ProductId">Edit</a> |
     <a asp-action="Index">BACK TO LIST</a>
 </div>
 

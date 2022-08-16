@@ -24,9 +24,9 @@ public class PutSaleViewModel
         var putSale = new PutSaleViewModel
         {
             Id = sale.Id,
-            CustomerId = sale.Customer.Id,
+            CustomerId = sale.Customer.CustomerId,
             CustomerName = sale.Customer.FirstName + " " + sale.Customer.LastName,
-            SellerId = sale.Seller.Id,
+            SellerId = sale.Seller.SellerId,
             SellerName = sale.Seller.FirstName + " " + sale.Seller.LastName,
             TotalAmount = sale.TotalAmount,
             SoldProducts = sale.SoldProducts,

@@ -1,7 +1,7 @@
 namespace SalesWeb.Models;
 public class Seller
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid SellerId { get; set; } = Guid.NewGuid();
     
     public string FirstName { get; set; } = string.Empty;
     

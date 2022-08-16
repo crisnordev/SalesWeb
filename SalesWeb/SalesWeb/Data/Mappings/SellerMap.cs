@@ -6,7 +6,7 @@ public class SellerMap : IEntityTypeConfiguration<Seller>
     {
         builder.ToTable("Seller");
         
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.SellerId);
         
         builder.Property(x => x.FirstName).
             IsRequired().

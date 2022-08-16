@@ -14,7 +14,7 @@
     <thead>
     <tr class="success">
         <th>
-            @Html.DisplayNameFor(model => model[0].Id)
+            @Html.DisplayNameFor(model => model[0].CustomerId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].FirstName)
@@ -39,7 +39,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.CustomerId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -57,9 +57,9 @@
                 @Html.DisplayFor(modelItem => item.BirthDate)
             </td>
             <td>
-                <a asp-action="Put" asp-route-id="@item.Id">EDIT</a>
-                <a asp-action="GetById" asp-route-id="@item.Id">DETAILS</a>
-                <a asp-action="Delete" asp-route-id="@item.Id">DELETE</a>
+                <a asp-action="Put" asp-route-id="@item.CustomerId">EDIT</a>
+                <a asp-action="GetById" asp-route-id="@item.CustomerId">DETAILS</a>
+                <a asp-action="Delete" asp-route-id="@item.CustomerId">DELETE</a>
             </td>
         </tr>
     }

@@ -2,7 +2,7 @@ namespace SalesWeb.ViewModels.SellerViewModels;
 
 public class GetSellerViewModel
 {
-    [DisplayName("SELLER IDENTIFICATION")] public Guid Id { get; set; }
+    [DisplayName("SELLER IDENTIFICATION")] public Guid SellerId { get; set; }
 
     [DisplayName("NAME")] public string Name { get; set; }
 
@@ -21,7 +21,7 @@ public class GetSellerViewModel
     {
         var getSeller = new GetSellerViewModel
         {
-            Id = seller.Id,
+            SellerId = seller.SellerId,
             Name = seller.FirstName + " " + seller.LastName,
             Email = seller.Email,
             DocumentId = seller.DocumentId,

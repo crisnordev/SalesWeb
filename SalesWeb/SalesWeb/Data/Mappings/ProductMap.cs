@@ -8,7 +8,7 @@ public class ProductMap : IEntityTypeConfiguration<Product>
     {
         builder.ToTable("Product");
         
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.ProductId);
         
         builder.Property(x => x.Name).
             IsRequired().

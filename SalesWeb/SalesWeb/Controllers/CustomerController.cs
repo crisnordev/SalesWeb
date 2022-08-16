@@ -32,7 +32,8 @@ public class CustomerController : Controller
 
         try
         {
-            GetCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            GetCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => 
+                x.CustomerId == id);
             if (customer != null) return View(customer);
             var error = new ErrorViewModel("C-03C - Can not find Customer.");
             return RedirectToAction(nameof(Error), error);
@@ -61,7 +62,7 @@ public class CustomerController : Controller
 
         var customer = new Customer
         {
-            Id = Guid.NewGuid(),
+            CustomerId = Guid.NewGuid(),
             FirstName = model.FirstName,
             LastName = model.LastName,
             Email = model.Email,
@@ -100,7 +101,7 @@ public class CustomerController : Controller
         try
         {
             EditorCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => 
-                x.Id == id);
+                x.CustomerId == id);
             return View(customer);
         }
         catch
@@ -121,7 +122,7 @@ public class CustomerController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var customer = await context.Customers.FirstOrDefaultAsync(x => x.Id == id);
+        var customer = await context.Customers.FirstOrDefaultAsync(x => x.CustomerId == id);
         if (customer == null)
         {
             var error = new ErrorViewModel("C-11C - Can not find Customer.");
@@ -163,7 +164,8 @@ public class CustomerController : Controller
 
         try
         {
-            GetCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            GetCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => 
+                x.CustomerId == id);
             if (customer != null) return View(customer);
             var error = new ErrorViewModel("C-15C - Can not find Customer.");
             return RedirectToAction(nameof(Error), error);
@@ -185,7 +187,7 @@ public class CustomerController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.CustomerId == id);
         if (customer == null)
         {
             var error = new ErrorViewModel("C-18C - Can not find Customer.");

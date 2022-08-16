@@ -32,7 +32,8 @@ public class SellerController : Controller
 
         try
         {
-            GetSellerViewModel seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            GetSellerViewModel seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => 
+                x.SellerId == id);
             if (seller == null) return View(seller);
             var error = new ErrorViewModel("C-03SE - Can not find Seller.");
             return RedirectToAction(nameof(Error), error);
@@ -98,7 +99,8 @@ public class SellerController : Controller
 
         try
         {
-            EditorSellerViewModel seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            EditorSellerViewModel seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => 
+                x.SellerId == id);
             return View(seller);
         }
         catch
@@ -119,7 +121,7 @@ public class SellerController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var seller = await context.Sellers.FirstOrDefaultAsync(x => x.Id == id);
+        var seller = await context.Sellers.FirstOrDefaultAsync(x => x.SellerId == id);
         if (seller == null)
         {
             var error = new ErrorViewModel("C-11SE - Can not find Seller.");
@@ -162,7 +164,8 @@ public class SellerController : Controller
 
         try
         {
-            GetSellerViewModel seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            GetSellerViewModel seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => 
+                x.SellerId == id);
             if (seller != null) return View(seller);
             var error = new ErrorViewModel("C-15SE - Can not find Seller.");
             return RedirectToAction(nameof(Error), error);
@@ -184,7 +187,7 @@ public class SellerController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var seller = await context.Sellers.AsNoTracking().FirstOrDefaultAsync(x => x.SellerId == id);
         if (seller == null)
         {
             var error = new ErrorViewModel("C-18SE - Can not find Seller.");

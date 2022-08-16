@@ -6,7 +6,7 @@ public class CustomerMap : IEntityTypeConfiguration<Customer>
     {
         builder.ToTable("Customer");
         
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.CustomerId);
         
         builder.Property(x => x.FirstName).
             IsRequired().

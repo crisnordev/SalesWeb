@@ -62,9 +62,9 @@ public class SaleController : Controller
     {
         try
         {
-            ViewData["CustomerId"] = new SelectList(context.Customers, "Id", "Name");
-            ViewData["SellerId"] = new SelectList(context.Sellers, "Id", "Name");
-            ViewData["ProductId"] = new SelectList(context.Products, "Id", "Name");
+            ViewData["CustomerId"] = new SelectList(context.Customers, "CustomerId", "FirstName");
+            ViewData["SellerId"] = new SelectList(context.Sellers, "SellerId", "FirstName");
+            ViewData["ProductId"] = new SelectList(context.Products, "ProductId", "Name");
             return View(model);
         }
         catch
@@ -84,14 +84,14 @@ public class SaleController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var customer = await context.Customers.FirstOrDefaultAsync(x => x.Id == model.CustomerId);
+        var customer = await context.Customers.FirstOrDefaultAsync(x => x.CustomerId == model.CustomerId);
         if (customer == null)
         {
             var error = new ErrorViewModel("C-07SA - Can not find Customer.");
             return RedirectToAction(nameof(Error), error);
         }
 
-        var seller = await context.Sellers.FirstOrDefaultAsync(x => x.Id == model.SellerId);
+        var seller = await context.Sellers.FirstOrDefaultAsync(x => x.SellerId == model.SellerId);
         if (seller == null)
         {
             var error = new ErrorViewModel("C-08SA - Can not find Seller.");
@@ -100,13 +100,12 @@ public class SaleController : Controller
 
         var sale = new Sale
         {
-            Id = Guid.NewGuid(),
             Customer = customer,
             Seller = seller,
             TotalAmount = 0,
             SoldProducts = new List<SoldProduct>()
         };
-        var product = await context.Products.FirstOrDefaultAsync(x => x.Id == model.ProductId);
+        var product = await context.Products.FirstOrDefaultAsync(x => x.ProductId == model.ProductId);
         if (product == null)
         {
             var error = new ErrorViewModel("C-09SA - Can not find Product.");
@@ -116,8 +115,7 @@ public class SaleController : Controller
         sale.TotalAmount = model.ProductQuantity * product.Price;
         var soldProduct = new SoldProduct
         {
-            Id = Guid.NewGuid(),
-            ProductId = product.Id.ToString(),
+            ProductId = product.ProductId.ToString(),
             Name = product.Name,
             Quantity = model.ProductQuantity,
             Price = product.Price,
@@ -164,9 +162,9 @@ public class SaleController : Controller
 
         try
         {
-            ViewData["CustomerId"] = new SelectList(context.Customers, "Id", "Name");
-            ViewData["SellerId"] = new SelectList(context.Sellers, "Id", "Name");
-            ViewData["ProductId"] = new SelectList(context.Products, "Id", "Name");
+            ViewData["CustomerId"] = new SelectList(context.Customers, "CustomerId", "FirstName");
+            ViewData["SellerId"] = new SelectList(context.Sellers, "SellerId", "FirstName");
+            ViewData["ProductId"] = new SelectList(context.Products, "ProductId", "Name");
         }
         catch
         {
@@ -207,7 +205,7 @@ public class SaleController : Controller
             return RedirectToAction(nameof(Error), error);
         }
 
-        var product = await context.Products.FirstOrDefaultAsync(x => x.Id == model.ProductId);
+        var product = await context.Products.FirstOrDefaultAsync(x => x.ProductId == model.ProductId);
         if (product == null)
         {
             var error = new ErrorViewModel("C-18SA - Can not find Product.");
@@ -217,8 +215,7 @@ public class SaleController : Controller
         sale.TotalAmount += model.ProductQuantity * product.Price;
         var soldProduct = new SoldProduct
         {
-            Id = Guid.NewGuid(),
-            ProductId = product.Id.ToString(),
+            ProductId = product.ProductId.ToString(),
             Name = product.Name,
             Quantity = model.ProductQuantity,
             Price = product.Price

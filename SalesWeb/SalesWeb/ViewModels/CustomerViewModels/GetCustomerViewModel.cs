@@ -2,7 +2,7 @@ namespace SalesWeb.ViewModels.CustomerViewModels;
 
 public class GetCustomerViewModel
 {
-    [DisplayName("CUSTOMER IDENTIFICATION")] public Guid Id { get; set; }
+    [DisplayName("CUSTOMER IDENTIFICATION")] public Guid CustomerId { get; set; }
 
     [DisplayName("FIRST NAME")] public string FirstName { get; set; }
     
@@ -21,7 +21,7 @@ public class GetCustomerViewModel
     {
         var getCustomer = new GetCustomerViewModel
         {
-            Id = customer.Id,
+            CustomerId = customer.CustomerId,
             FirstName = customer.FirstName,
             LastName = customer.LastName,
             Email = customer.Email,
