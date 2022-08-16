@@ -88,7 +88,7 @@ public class CustomerController : Controller
         }
     }
 
-    [HttpPut]
+
     public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)
@@ -99,7 +99,8 @@ public class CustomerController : Controller
 
         try
         {
-            EditorCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            EditorCustomerViewModel customer = await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => 
+                x.Id == id);
             return View(customer);
         }
         catch
@@ -109,7 +110,7 @@ public class CustomerController : Controller
         }
     }
 
-    [HttpPut]
+    [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id,
         EditorCustomerViewModel model)
@@ -151,8 +152,7 @@ public class CustomerController : Controller
             return RedirectToAction(nameof(Error), error);
         }
     }
-
-    [HttpDelete]
+    
     public async Task<IActionResult> Delete([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)
@@ -175,7 +175,7 @@ public class CustomerController : Controller
         }
     }
 
-    [HttpDelete, ActionName("Delete")]
+    [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed([FromServices] SalesWebDbContext context, Guid id)
     {

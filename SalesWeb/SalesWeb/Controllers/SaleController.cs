@@ -57,8 +57,7 @@ public class SaleController : Controller
             return RedirectToAction(nameof(Error), error);
         }
     }
-
-    [HttpPost]
+    
     public async Task<IActionResult> Post([FromServices] SalesWebDbContext context, PostSaleViewModel model)
     {
         try
@@ -148,8 +147,7 @@ public class SaleController : Controller
             return RedirectToAction(nameof(Error), error);
         }
     }
-
-    [HttpPut]
+    
     public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id, PutSaleViewModel model)
     {
         if (!ModelState.IsValid)
@@ -191,7 +189,7 @@ public class SaleController : Controller
         return View(model);
     }
 
-    [HttpPut, ActionName("Put")]
+    [HttpPost, ActionName("Put")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> PutSaleProduct([FromServices] SalesWebDbContext context, Guid id,
         PutSaleViewModel model)
@@ -249,8 +247,7 @@ public class SaleController : Controller
             return RedirectToAction(nameof(Error), error);
         }
     }
-
-    [HttpDelete]
+    
     public async Task<IActionResult> Delete([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)

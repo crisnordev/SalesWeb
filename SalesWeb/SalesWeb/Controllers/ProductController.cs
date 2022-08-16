@@ -84,8 +84,7 @@ public class ProductController : Controller
             return RedirectToAction(nameof(Error), error);
         }
     }
-
-    [HttpPut]
+    
     public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)

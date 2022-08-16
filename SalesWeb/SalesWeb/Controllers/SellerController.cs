@@ -61,7 +61,6 @@ public class SellerController : Controller
 
         var seller = new Seller
         {
-            Id = Guid.NewGuid(),
             FirstName = model.FirstName,
             LastName = model.LastName,
             Email = model.Email,
@@ -88,8 +87,7 @@ public class SellerController : Controller
             return RedirectToAction(nameof(Error), error);
         }
     }
-
-    [HttpPut]
+    
     public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)
@@ -110,7 +108,7 @@ public class SellerController : Controller
         }
     }
 
-    [HttpPut]
+    [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Put([FromServices] SalesWebDbContext context, Guid id,
         EditorSellerViewModel model)
@@ -153,8 +151,7 @@ public class SellerController : Controller
             return RedirectToAction(nameof(Error), error);
         }
     }
-
-    [HttpDelete]
+    
     public async Task<IActionResult> Delete([FromServices] SalesWebDbContext context, Guid id)
     {
         if (id == null)
@@ -177,7 +174,7 @@ public class SellerController : Controller
         }
     }
 
-    [HttpDelete, ActionName("Delete")]
+    [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed([FromServices] SalesWebDbContext context, Guid id)
     {
